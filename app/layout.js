@@ -8,7 +8,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: 'Hybreed Clone - Creative Agency',
+  title: 'FLYDEVS GLOBAL - Creative Agency',
   description: 'Your in-house design & engineering team',
 }
 
