@@ -140,19 +140,17 @@ export default function ServicesSection() {
           overflow: hidden;
           position: relative;
         }
-      .service-card-image {
-        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        width: 100%;
-        aspect-ratio: 16 / 10;
-       
-        background-size: cover;
-        background-position: center;
-        transform: scale(0.85);
-      }
-
-      .service-card:hover .service-card-image {
-        transform: scale(1);
-      }
+        .service-card-image {
+          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          width: 100%;
+          aspect-ratio: 16 / 10;
+          background-size: cover;
+          background-position: center;
+          transform: scale(0.85);
+        }
+        .service-card:hover .service-card-image {
+          transform: scale(1);
+        }
         .service-card-icon {
           width: 64px;
           height: 64px;

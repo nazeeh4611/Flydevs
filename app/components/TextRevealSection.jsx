@@ -18,7 +18,6 @@ export default function TextRevealSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Main paragraph — word by word reveal
       const mainWords = mainRef.current.querySelectorAll('.word')
       gsap.fromTo(
         mainWords,
@@ -36,7 +35,6 @@ export default function TextRevealSection() {
         }
       )
 
-      // Sub line — word by word reveal, starts after main
       const subWords = subRef.current.querySelectorAll('.word')
       gsap.fromTo(
         subWords,
@@ -78,41 +76,41 @@ export default function TextRevealSection() {
       ref={sectionRef}
       style={{
         background: '#ffffff',
-        padding: '120px 24px 160px',
+        padding: 'clamp(60px, 10vw, 120px) 20px clamp(80px, 12vw, 160px)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
       }}
     >
-      {/* Main paragraph */}
       <p
         ref={mainRef}
         style={{
           fontFamily: "'Georgia', 'Times New Roman', serif",
-          fontSize: 'clamp(22px, 3.2vw, 42px)',
+          fontSize: 'clamp(20px, 3.2vw, 42px)',
           fontWeight: 400,
           lineHeight: 1.55,
           textAlign: 'center',
           maxWidth: 860,
           margin: '0 auto 64px',
           letterSpacing: '-0.01em',
+          padding: '0 12px',
         }}
       >
         {wrapWords(MAIN_TEXT)}
       </p>
 
-      {/* Sub line */}
       <p
         ref={subRef}
         style={{
           fontFamily: "'Georgia', 'Times New Roman', serif",
-          fontSize: 'clamp(18px, 2.2vw, 30px)',
+          fontSize: 'clamp(16px, 2.2vw, 30px)',
           fontWeight: 400,
           lineHeight: 1.5,
           textAlign: 'center',
           maxWidth: 700,
           margin: '0 auto',
           letterSpacing: '0.01em',
+          padding: '0 12px',
         }}
       >
         {SUB_TEXT.split(' ').map((word, i) => {

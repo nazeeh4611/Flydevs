@@ -45,15 +45,15 @@ export default function FaqSection() {
       style={{
         background: '#1a1a1a',
         borderRadius: 32,
-        padding: '90px 60px 100px',
+        padding: 'clamp(60px, 8vw, 90px) clamp(20px, 4vw, 60px) clamp(80px, 10vw, 100px)',
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
         display: 'grid',
-        gridTemplateColumns: '0.9fr 1.3fr',
+        gridTemplateColumns: '1fr',
         gap: 40,
         position: 'relative',
+        margin: '0 20px',
       }}
     >
-      {/* Left column */}
       <div>
         <div
           style={{
@@ -81,6 +81,7 @@ export default function FaqSection() {
             lineHeight: 1.05,
             letterSpacing: '-0.03em',
             margin: 0,
+            marginBottom: 'clamp(32px, 4vw, 48px)',
           }}
         >
           Answers to
@@ -89,7 +90,6 @@ export default function FaqSection() {
         </h2>
       </div>
 
-      {/* Right column - accordion */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {faqs.map((f) => {
           const isOpen = openId === f.id
@@ -115,7 +115,7 @@ export default function FaqSection() {
               >
                 <span
                   style={{
-                    fontSize: 18,
+                    fontSize: 'clamp(16px, 1.4vw, 18px)',
                     fontWeight: 700,
                     color: '#fff',
                     lineHeight: 1.35,
@@ -160,10 +160,10 @@ export default function FaqSection() {
                   style={{
                     marginTop: 16,
                     marginBottom: 0,
-                    fontSize: 14.5,
+                    fontSize: 'clamp(14px, 1.1vw, 14.5px)',
                     lineHeight: 1.7,
                     color: 'rgba(255,255,255,0.65)',
-                    paddingRight: 40,
+                    paddingRight: 'clamp(0px, 4vw, 40px)',
                   }}
                 >
                   {f.answer}

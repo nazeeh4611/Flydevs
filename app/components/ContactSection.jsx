@@ -1,3 +1,4 @@
+// components/ContactSection.tsx
 'use client'
 
 export default function ContactSection() {
@@ -11,14 +12,14 @@ export default function ContactSection() {
         position: 'relative',
         overflow: 'hidden',
         marginTop: 120,
+        margin: '0 20px',
       }}
     >
-      {/* Yellow CTA banner */}
       <div
         style={{
           background: '#e8f25a',
           borderRadius: 26,
-          padding: '70px 60px 90px',
+          padding: 'clamp(50px, 6vw, 70px) clamp(24px, 5vw, 60px) clamp(60px, 8vw, 90px)',
           textAlign: 'center',
           position: 'relative',
         }}
@@ -31,7 +32,7 @@ export default function ContactSection() {
             border: '1.5px solid #1a1a1a',
             borderRadius: 999,
             padding: '6px 18px',
-            fontSize: 12,
+            fontSize: 'clamp(10px, 1vw, 12px)',
             fontWeight: 600,
             letterSpacing: '0.04em',
             color: '#1a1a1a',
@@ -43,7 +44,7 @@ export default function ContactSection() {
 
         <h2
           style={{
-            fontSize: 'clamp(40px, 6.5vw, 88px)',
+            fontSize: 'clamp(32px, 6.5vw, 88px)',
             fontWeight: 800,
             color: '#1a1a1a',
             lineHeight: 1.05,
@@ -65,8 +66,8 @@ export default function ContactSection() {
               color: '#fff',
               border: 'none',
               borderRadius: 999,
-              padding: '22px 36px',
-              fontSize: 18,
+              padding: 'clamp(16px, 2vw, 22px) clamp(24px, 3vw, 36px)',
+              fontSize: 'clamp(16px, 1.6vw, 18px)',
               fontWeight: 800,
               letterSpacing: '-0.01em',
               cursor: 'pointer',
@@ -81,21 +82,19 @@ export default function ContactSection() {
         </h2>
       </div>
 
-      {/* Bottom dark panel */}
       <div
         style={{
-          padding: '70px 60px 60px',
+          padding: 'clamp(40px, 5vw, 70px) clamp(24px, 5vw, 60px) clamp(40px, 5vw, 60px)',
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: 40,
+          gap: 'clamp(30px, 4vw, 40px)',
         }}
       >
-        {/* Left: quote */}
         <div>
           <p
             style={{
               fontStyle: 'italic',
-              fontSize: 'clamp(22px, 3vw, 32px)',
+              fontSize: 'clamp(20px, 3vw, 32px)',
               color: '#fff',
               lineHeight: 1.35,
               margin: 0,
@@ -108,14 +107,13 @@ export default function ContactSection() {
             <br />
             Values determine the future&quot;
           </p>
-          <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)' }}>
+          <span style={{ fontSize: 'clamp(14px, 1.2vw, 16px)', color: 'rgba(255,255,255,0.7)' }}>
             — Robert L. Peters
           </span>
         </div>
 
-        {/* Right: contact details */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 36, alignItems: 'flex-end' }}>
-          <div style={{ textAlign: 'right' }}>
+          <div style={{ textAlign: 'right', width: '100%' }}>
             <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>
               Start a conversation
             </div>
@@ -125,10 +123,11 @@ export default function ContactSection() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 10,
-                fontSize: 28,
+                fontSize: 'clamp(20px, 2.5vw, 28px)',
                 fontWeight: 600,
                 color: '#fff',
                 textDecoration: 'underline',
+                wordBreak: 'break-all',
               }}
             >
               arg@flydevs.com
@@ -151,7 +150,7 @@ export default function ContactSection() {
             </a>
           </div>
 
-          <div style={{ textAlign: 'right' }}>
+          <div style={{ textAlign: 'right', width: '100%' }}>
             <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>
               Call us
             </div>
@@ -161,13 +160,13 @@ export default function ContactSection() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 10,
-                fontSize: 28,
+                fontSize: 'clamp(20px, 2.5vw, 28px)',
                 fontWeight: 600,
                 color: '#fff',
                 textDecoration: 'underline',
               }}
             >
-              + 91 9833 57 2299
+              +91 9833 57 2299
               <span
                 style={{
                   width: 26,
@@ -189,10 +188,9 @@ export default function ContactSection() {
         </div>
       </div>
 
-      {/* Footer row */}
       <div
         style={{
-          padding: '0 60px 36px',
+          padding: '0 clamp(24px, 5vw, 60px) 36px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -200,39 +198,18 @@ export default function ContactSection() {
           gap: 16,
         }}
       >
-        <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>
+        <span style={{ fontSize: 'clamp(12px, 1vw, 14px)', color: 'rgba(255,255,255,0.6)' }}>
           ©2024 FLYDEVS Technologies
         </span>
-        <div style={{ display: 'flex', gap: 28, fontSize: 14, color: '#fff' }}>
-          <span>Instagram</span>
-          <span>LinkedIn</span>
-          <span>Twitter X</span>
-          <span>Dribbble</span>
+        <div style={{ display: 'flex', gap: 'clamp(16px, 2vw, 28px)', fontSize: 'clamp(12px, 1vw, 14px)', color: '#fff', flexWrap: 'wrap' }}>
+          <span style={{ cursor: 'pointer' }}>Instagram</span>
+          <span style={{ cursor: 'pointer' }}>LinkedIn</span>
+          <span style={{ cursor: 'pointer' }}>Twitter X</span>
+          <span style={{ cursor: 'pointer' }}>Dribbble</span>
         </div>
-        <a href="#" style={{ fontSize: 14, color: '#fff', textDecoration: 'underline' }}>
+        <a href="#" style={{ fontSize: 'clamp(12px, 1vw, 14px)', color: '#fff', textDecoration: 'underline' }}>
           Company Deck ↓
         </a>
-      </div>
-
-      {/* Marquee strip */}
-      <div
-        style={{
-          background: '#e8f25a',
-          padding: '24px 0',
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        <span
-          style={{
-            fontSize: 36,
-            fontWeight: 800,
-            color: '#1a1a1a',
-            letterSpacing: '-0.01em',
-          }}
-        >
-          FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM •
-        </span>
       </div>
     </section>
   )

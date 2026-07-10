@@ -363,7 +363,7 @@ function ShowMoreButton() {
           color: '#fff',
           padding: '16px 40px',
           borderRadius: 50,
-          fontSize: 15,
+          fontSize: 'clamp(13px, 1.2vw, 15px)',
           fontWeight: 700,
           letterSpacing: '0.06em',
           cursor: 'pointer',

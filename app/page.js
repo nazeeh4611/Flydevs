@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import LoadingScreen from './components/LoadingScreen'
 import HeroSection from './components/HeroSection'
 import PartnerSection from './components/PartnerSection'
@@ -10,46 +10,80 @@ import FeaturedWorkSection from './components/FeaturedWorkSection'
 import ServicesSection from './components/ServiceSection'
 import TestimonialsSection from './components/Testimonials'
 import FaqSection from './components/FaqSection'
-import ContactSection from './components/ContactSection.jsx'
+import ContactSection from './components/ContactSection'
+import Footer from './components/Footer'
+
+function SectionWrapper({ children }) {
+  return (
+    <div style={{ 
+      marginBottom: 'clamp(40px, 8vw, 100px)',
+    }}>
+      {children}
+    </div>
+  )
+}
+
 export default function Home() {
   const [loading, setLoading] = useState(true)
+  const [isFirstVisit, setIsFirstVisit] = useState(true)
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisited')
+    
+    if (hasVisited) {
+      setIsFirstVisit(false)
+      setLoading(false)
+    } else {
+      setIsFirstVisit(true)
+    }
+  }, [])
+
+  const handleLoadingComplete = () => {
+    localStorage.setItem('hasVisited', 'true')
+    setLoading(false)
+  }
 
   return (
     <>
       <Navigation />
       
-      {loading ? (
-        <LoadingScreen onComplete={() => setLoading(false)} />
+      {loading && isFirstVisit ? (
+        <LoadingScreen onComplete={handleLoadingComplete} />
       ) : (
         <main className="relative">
-          <HeroSection />
-          <PartnerSection />
-          <TextRevealSection />
-          <FeaturedWorkSection/>
-          <ServicesSection/>
-          <TestimonialsSection/>
-          <FaqSection/>
-          <ContactSection/>
+          <SectionWrapper>
+            <HeroSection />
+          </SectionWrapper>
           
-          {/* Next Section */}
-          {/* <section className="min-h-[60vh] bg-white flex items-center justify-center border-t border-gray-100">
-            <div className="text-center px-6 max-w-3xl mx-auto">
-              <div className="inline-block px-4 py-1.5 bg-gray-100 rounded-full text-xs tracking-wider uppercase text-gray-600 mb-6">
-                Coming Soon
-              </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-800 mb-4">
-                Next Section
-              </h2>
-              <p className="text-gray-500 text-lg leading-relaxed">
-                This space is reserved for your next component.
-              </p>
-              <div className="mt-8 flex justify-center gap-2">
-                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              </div>
-            </div>
-          </section> */}
+          <SectionWrapper>
+            <PartnerSection />
+          </SectionWrapper>
+          
+          <SectionWrapper>
+            <TextRevealSection />
+          </SectionWrapper>
+          
+          <SectionWrapper>
+            <FeaturedWorkSection />
+          </SectionWrapper>
+          
+          <SectionWrapper>
+            <ServicesSection />
+          </SectionWrapper>
+          
+          <SectionWrapper>
+            <TestimonialsSection />
+          </SectionWrapper>
+          
+          <SectionWrapper>
+            <FaqSection />
+          </SectionWrapper>
+          
+          <SectionWrapper>
+            <ContactSection />
+          </SectionWrapper>
+          
+          <Footer />
         </main>
       )}
     </>
