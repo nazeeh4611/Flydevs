@@ -221,7 +221,7 @@ export default function HeroSection() {
             <div className="max-w-2xl order-2 lg:order-1">
               <div className="hero-badge inline-block bg-white/90 backdrop-blur-sm border border-gray-200 rounded-full px-4 sm:px-5 py-1.5 mb-6 opacity-0 max-w-full">
                 <span className="text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase text-gray-600 whitespace-normal">
-                  WE ARE CREATIVE AGENCY BASED IN TWIN CITY OF MUMBAI
+                  WE ARE CREATIVE AGENCY BASED IN KERALA, INDIA & DUBAI, UAE
                 </span>
               </div>
 

@@ -1,6 +1,7 @@
-// AboutClient.jsx
+"use client";
+
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import {
   Target,
   Eye,
@@ -14,7 +15,8 @@ import {
   Check,
   ArrowUpRight,
 } from 'lucide-react';
-import { ImageWithFallback } from '../Fallback/ImageWithFallback';
+import Image from 'next/image';
+import Footer from './Footer';
 
 function FadeInSection({ children, delay = 0 }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -158,7 +160,7 @@ function AboutHero() {
             <h1 className="font-bold leading-[0.95] tracking-tight text-[clamp(2.5rem,6.5vw,5rem)] mb-6">
               <span className="block">Since 2015 —</span>
               <span className="block">Nacrosoft &</span>
-              <span className="block text-gray-300">FlyHomies</span>
+              <span className="block text-gray-300">FlyDevs</span>
             </h1>
 
             <p className="max-w-xl text-base md:text-lg text-gray-600 leading-relaxed mb-10">
@@ -168,7 +170,7 @@ function AboutHero() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/contact"
+                href="/contact"
                 className="group bg-black text-white px-7 sm:px-8 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm tracking-wider flex items-center justify-center gap-3 hover:bg-[#1a1a1a] transition-colors"
               >
                 <span>GET IN TOUCH</span>
@@ -176,7 +178,7 @@ function AboutHero() {
               </Link>
 
               <Link
-                to="/services"
+                href="/services"
                 className="border-2 border-[#1a1a1a] text-[#1a1a1a] px-7 sm:px-8 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm tracking-wider flex items-center justify-center gap-3 hover:bg-[#1a1a1a] hover:text-white transition-colors"
               >
                 <span>OUR SERVICES</span>
@@ -189,7 +191,14 @@ function AboutHero() {
           <div className="flex justify-center animate-float">
             <div className="relative w-full max-w-lg">
               <div className="absolute inset-0 bg-[#d4e84a]/20 rounded-3xl blur-3xl"></div>
-              <ImageWithFallback src="/fh.png" alt="Nacrosoft Technology and FlyHomies Associates" className="w-full h-full object-contain relative" />
+              <Image 
+                src="/fd.avif" 
+                alt="Nacrosoft Technology and FlyHomies Associates" 
+                className="w-full h-full object-contain relative"
+                width={600}
+                height={400}
+                priority
+              />
             </div>
           </div>
         </FadeInSection>
@@ -267,8 +276,14 @@ function StorySection() {
 
           <div className="relative">
             <div className="absolute inset-0 bg-[#d4e84a]/10 rounded-2xl blur-2xl"></div>
-            <div className="relative bg-white/5 border border-white/10 rounded-2xl p-8">
-              <ImageWithFallback src="/story.svg" alt="Nacrosoft Technology story" className="w-full h-full object-contain" />
+            <div className="relative rounded-2xl p-8">
+              <Image 
+                src="/story.avif" 
+                alt="Nacrosoft Technology story" 
+                className="w-full h-full object-contain rounded-2xl"
+                width={500}
+                height={500}
+              />
             </div>
           </div>
         </div>
@@ -509,9 +524,18 @@ function StatsSection() {
 
 function TeamSection() {
   const teamMembers = [
-    { icon: <Users size={40} color="#1a1a1a" />, title: 'Leadership Team', desc: 'Visionary leaders guiding our strategic direction' },
-    { icon: <Lightbulb size={40} color="#1a1a1a" />, title: 'Development Experts', desc: 'Skilled developers creating cutting-edge solutions' },
-    { icon: <Heart size={40} color="#1a1a1a" />, title: 'Creative Team', desc: 'Design wizards crafting beautiful user experiences' },
+    {
+      image: '/founder.webp',
+      name: 'Jabir',
+      role: 'Founder & CEO',
+      desc: 'Founder of Flyhomies Associates with over a decade of expertise in digital transformation, enterprise solutions, and modern technology systems. She leads the company with a clear vision for quality, innovation, and long-term value.',
+    },
+    {
+      image: '/co-founder.webp',
+      name: 'Hanzitha Moideen',
+      role: 'Co-Founder',
+      desc: 'Co-founder and the backbone of Flyhomies Associates technical division. Highly experienced in cloud systems, DevOps automation, and scalable architectures powering enterprise-level platforms.',
+    },
   ];
 
   return (
@@ -531,24 +555,36 @@ function TeamSection() {
             maxWidth: 700,
           }}
         >
-          Meet the team behind Nacrosoft & FlyHomies
+          Meet the team behind Nacrosoft &amp; FlyHomies
         </h2>
         <p className="text-base md:text-lg text-gray-600 max-w-2xl mb-12">
-          The passionate professionals driving innovation and excellence across VoIP, software, and design.
+          The passionate leaders driving innovation and excellence across VoIP, software, and design.
         </p>
       </FadeInSection>
 
-      <div className="grid md:grid-cols-3 gap-5 mb-12">
+      <div className="grid sm:grid-cols-2 gap-6 max-w-3xl">
         {teamMembers.map((member, i) => (
-          <FadeInSection key={member.title} delay={i * 150}>
+          <FadeInSection key={member.name} delay={i * 150}>
             <div className="bg-white rounded-2xl p-8 border border-black/5 shadow-[0_8px_24px_rgba(26,26,26,0.07)] hover:-translate-y-2 hover:shadow-[0_24px_48px_rgba(26,26,26,0.12)] transition-all duration-500 text-center h-full">
               <div
-                className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
+                className="w-28 h-28 mx-auto mb-6 rounded-full overflow-hidden relative"
                 style={{ background: '#f7f5f2' }}
               >
-                {member.icon}
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                  sizes="112px"
+                />
               </div>
-              <h3 className="text-xl font-bold text-[#1a1a1a] mb-2">{member.title}</h3>
+              <h3 className="text-xl font-bold text-[#1a1a1a] mb-1">{member.name}</h3>
+              <p
+                className="text-xs font-semibold tracking-wider mb-4"
+                style={{ color: '#a3b52f' }}
+              >
+                {member.role.toUpperCase()}
+              </p>
               <p className="text-gray-600 text-sm leading-relaxed">{member.desc}</p>
             </div>
           </FadeInSection>
@@ -556,9 +592,9 @@ function TeamSection() {
       </div>
 
       <FadeInSection delay={300}>
-        <div className="text-center">
+        <div className="text-center mt-12">
           <Link
-            to="/team"
+            href="/team"
             className="group inline-flex items-center bg-black text-white px-8 py-4 rounded-full text-xs sm:text-sm tracking-wider gap-3 hover:bg-[#1a1a1a] transition-colors"
           >
             MEET OUR TEAM
@@ -647,7 +683,7 @@ function FinalCTA() {
             From VoIP infrastructure to web design, let&apos;s build your next project together.
           </p>
         </div>
-        <Link to="/contact" className="abt-final-cta-btn">
+        <Link href="/contact" className="abt-final-cta-btn">
           CONTACT US TODAY
           <div className="abt-final-cta-icon">
             <ArrowUpRight size={16} color="#1a1a1a" />
@@ -694,6 +730,7 @@ export function AboutClient() {
         .animate-float { animation: float 3s ease-in-out infinite; }
         .animate-bounce-slow { animation: bounce-slow 3s ease-in-out infinite; }
       `}</style>
+      <Footer />
     </div>
   );
 }

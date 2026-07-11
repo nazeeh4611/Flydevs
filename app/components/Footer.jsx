@@ -1,8 +1,8 @@
 // components/Footer.tsx
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
-
 export default function Footer() {
   return (
     <>
@@ -21,15 +21,24 @@ export default function Footer() {
           paddingBottom: 40,
         }}>
           <div>
-            <h3 style={{
-              fontSize: 'clamp(28px, 3vw, 36px)',
-              fontWeight: 800,
-              color: '#e8f25a',
-              marginBottom: 16,
-              letterSpacing: '-0.02em',
-            }}>
-              FLYDEVS
-            </h3>
+           <div
+  style={{
+    marginBottom: 16,
+  }}
+>
+  <Image
+    src="/fdlogo-1.avif"
+    alt="FLYDEVS"
+    width={190}
+    height={80}
+    priority
+    style={{
+      width: '190px',
+      height: 'auto',
+      objectFit: 'contain',
+    }}
+  />
+</div>
             <p style={{
               fontSize: 'clamp(13px, 1vw, 14px)',
               color: 'rgba(255,255,255,0.5)',
@@ -108,9 +117,11 @@ export default function Footer() {
               flexDirection: 'column',
               gap: 10,
             }}>
-              <li><a href="mailto:arg@flydevs.com" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>arg@flydevs.com</a></li>
-              <li><a href="tel:+919833572299" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>+91 9833 57 2299</a></li>
-              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Mumbai, India</span></li>
+              <li><a href="mailto:flyhomiesinfo@gmail.com" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>flyhomiesinfo@gmail.com</a></li>
+              <li><a href="tel:+971504316900" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>+971 50 431 6900</a></li>
+              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Dubai, UAE</span></li>
+                            <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Kochi, Kerala, India</span></li>
+
             </ul>
           </div>
         </div>

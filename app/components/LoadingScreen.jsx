@@ -3,20 +3,57 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
+const QUOTES = [
+  {
+    stat: '74%',
+    text: 'of people are likely to return to a website if it is optimized for mobile.',
+    source: 'Adobe',
+  },
+  {
+    stat: '88%',
+    text: 'of online consumers are less likely to return to a site after a bad experience.',
+    source: 'Amazon Web Services',
+  },
+  {
+    stat: '0.05',
+    text: 'seconds is all it takes for users to form an opinion about your website.',
+    source: 'Google',
+  },
+  {
+    stat: '38%',
+    text: 'of people will stop engaging with a website if the content or layout is unattractive.',
+    source: 'Adobe',
+  },
+  {
+    stat: '5x',
+    text: 'more effective — that\u2019s the ROI companies see for every dollar invested in UX.',
+    source: 'Forrester',
+  },
+  {
+    stat: '1 in 2',
+    text: 'people say design is the number one reason they trust a website.',
+    source: 'Blue Corona',
+  },
+]
+
 export default function LoadingScreen({ onComplete }) {
   const [progress, setProgress] = useState(0)
+  const [quote, setQuote] = useState(QUOTES[0])
 
   const containerRef = useRef(null)
-  const textRef = useRef(null)
+  const numberRef = useRef(null)
   const lineRef = useRef(null)
   const quoteRef = useRef(null)
   const labelRef = useRef(null)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)])
+
     let currentProgress = 0
 
     const interval = setInterval(() => {
-      currentProgress += Math.floor(Math.random() * 6) + 2
+      currentProgress += Math.floor(Math.random() * 3) + 2
 
       if (currentProgress >= 100) {
         currentProgress = 100
@@ -40,7 +77,7 @@ export default function LoadingScreen({ onComplete }) {
           duration: 0.6,
         })
           .to(
-            [textRef.current, quoteRef.current, labelRef.current],
+            [quoteRef.current, numberRef.current, labelRef.current],
             {
               opacity: 0,
               y: -20,
@@ -59,7 +96,7 @@ export default function LoadingScreen({ onComplete }) {
       }
 
       setProgress(currentProgress)
-    }, 55)
+    }, 90)
 
     return () => {
       clearInterval(interval)
@@ -69,49 +106,49 @@ export default function LoadingScreen({ onComplete }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] bg-[#f7f5f2] flex items-center justify-center"
+      className="fixed inset-0 z-[100] flex flex-col justify-center px-8 md:px-20"
+      style={{ backgroundColor: '#d3e84a' }}
     >
-      <div className="relative flex flex-col items-center px-6 max-w-2xl">
-        <div
-          ref={quoteRef}
-          className="flex flex-col items-center"
-        >
-          <p className="text-sm text-gray-600 leading-relaxed max-w-lg text-center mb-6">
-            Companies that invest in UX see a lower customer acquisition cost
-            and increased revenues through better digital experiences.
-          </p>
-
-          <p className="text-xs text-gray-400 tracking-[0.25em] uppercase mb-10">
-            Forrester
-          </p>
-        </div>
-
-        <div className="flex items-center gap-5">
-          <div
-            ref={textRef}
-            className="text-7xl md:text-8xl font-light tracking-tight text-black"
-          >
-            {String(progress).padStart(3, '0')}
-            <span className="text-3xl ml-1">%</span>
-          </div>
-
-          <div className="w-32 md:w-56 h-px bg-gray-300 overflow-hidden">
-            <div
-              ref={lineRef}
-              className="h-full bg-black origin-left"
-              style={{
-                transform: 'scaleX(0)',
-              }}
-            />
-          </div>
-        </div>
-
-        <p
-          ref={labelRef}
-          className="mt-10 text-[10px] uppercase tracking-[0.3em] text-gray-400"
-        >
-          Loading Experience
+      <div ref={quoteRef} className="max-w-4xl">
+        <p className="italic text-xl md:text-2xl text-black mb-4">
+          Did you know?
         </p>
+
+        <p className="text-4xl md:text-6xl leading-[1.1] font-medium text-black">
+          <span className="font-extrabold">{quote.stat}</span> {quote.text}
+        </p>
+
+        <p className="mt-6 text-lg md:text-xl font-bold text-black">
+          [{quote.source}]
+        </p>
+      </div>
+
+      <div className="mt-16 w-full h-px bg-black/20 overflow-hidden">
+        <div
+          ref={lineRef}
+          className="h-full bg-black origin-left"
+          style={{ transform: 'scaleX(0)' }}
+        />
+      </div>
+
+      <div className="absolute bottom-10 right-8 md:right-16 flex items-end gap-3">
+        <span
+          ref={labelRef}
+          className="text-lg md:text-2xl font-semibold text-black mb-2 md:mb-4"
+        >
+          Loading
+        </span>
+        <div
+          ref={numberRef}
+          className="flex items-start leading-none text-black"
+        >
+          <span className="text-[6rem] md:text-[9rem] font-black tracking-tighter">
+            {String(progress).padStart(2, '0')}
+          </span>
+          <span className="text-3xl md:text-5xl font-black mt-2 md:mt-4">
+            %
+          </span>
+        </div>
       </div>
     </div>
   )

@@ -1,9 +1,10 @@
-// ContactClient.jsx
-import React, { useState } from 'react'
-import { MapPin, Phone, Mail, Send } from 'lucide-react'
+"use client";
+
+import React, { useState } from 'react';
+import { MapPin, Phone, Mail, Send } from 'lucide-react';
 
 function Badge({ children, on = 'light' }) {
-  const isDark = on === 'dark'
+  const isDark = on === 'dark';
   return (
     <div
       style={{
@@ -29,7 +30,7 @@ function Badge({ children, on = 'light' }) {
       />
       {children}
     </div>
-  )
+  );
 }
 
 function ContactInfo() {
@@ -74,8 +75,8 @@ function ContactInfo() {
           <div>
             <h4 className="text-white font-bold mb-1">Phone</h4>
             <p className="text-white/60 text-sm leading-relaxed">
-              Main: +971 (55) 000-0000<br />
-              Support: +971 (55) 000-0001<br />
+              Main: ++971 50 431 6900<br />
+              Support: +91 81291 11606<br />
               Sun-Thu, 9am-6pm GST
             </p>
           </div>
@@ -91,9 +92,9 @@ function ContactInfo() {
           <div>
             <h4 className="text-white font-bold mb-1">Email</h4>
             <p className="text-white/60 text-sm leading-relaxed">
-              General: info@nacrosoft.com<br />
-              Sales: sales@nacrosoft.com<br />
-              Support: support@nacrosoft.com
+              General: flyhomiesinfo@gmail.com<br />
+              Sales: flyhomiesinfo@gmail.com<br />
+              Support: flyhomiesinfo@gmail.com
             </p>
           </div>
         </div>
@@ -112,7 +113,7 @@ function ContactInfo() {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
 function ContactForm() {
@@ -122,37 +123,44 @@ function ContactForm() {
     company: '',
     phone: '',
     service: '',
-    message: ''
-  })
+    message: '',
+  });
 
-  const [submitted, setSubmitted] = useState(false)
+  const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    setSubmitted(true);
+    setIsLoading(false);
 
     setTimeout(() => {
-      setSubmitted(false)
+      setSubmitted(false);
       setFormData({
         name: '',
         email: '',
         company: '',
         phone: '',
         service: '',
-        message: ''
-      })
-    }, 3000)
-  }
+        message: '',
+      });
+    }, 3000);
+  };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const inputStyle =
-    'w-full px-4 py-3 border border-black/10 rounded-xl focus:ring-2 focus:ring-[#d4e84a] focus:border-[#d4e84a] outline-none text-sm transition-colors'
+    'w-full px-4 py-3 border border-black/10 rounded-xl focus:ring-2 focus:ring-[#d4e84a] focus:border-[#d4e84a] outline-none text-sm transition-colors bg-white';
 
   return (
     <div
@@ -162,7 +170,10 @@ function ContactForm() {
       <h3 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a] mb-8">Send Us a Message</h3>
 
       {submitted ? (
-        <div className="rounded-2xl p-10 text-center" style={{ background: '#f7f5f2', border: '1px solid rgba(26,26,26,0.08)' }}>
+        <div
+          className="rounded-2xl p-10 text-center"
+          style={{ background: '#f7f5f2', border: '1px solid rgba(26,26,26,0.08)' }}
+        >
           <div
             className="mx-auto mb-4 flex items-center justify-center rounded-full"
             style={{ width: 56, height: 56, background: '#d4e84a' }}
@@ -277,15 +288,25 @@ function ContactForm() {
 
           <button
             type="submit"
-            className="group w-full bg-black hover:bg-[#1a1a1a] text-white px-6 py-3.5 rounded-full transition-colors flex items-center justify-center gap-3 text-sm tracking-wider"
+            disabled={isLoading}
+            className="group w-full bg-black hover:bg-[#1a1a1a] text-white px-6 py-3.5 rounded-full transition-colors flex items-center justify-center gap-3 text-sm tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            SEND MESSAGE
-            <Send size={16} className="group-hover:translate-x-1 transition-transform" />
+            {isLoading ? (
+              <>
+                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                SENDING...
+              </>
+            ) : (
+              <>
+                SEND MESSAGE
+                <Send size={16} className="group-hover:translate-x-1 transition-transform" />
+              </>
+            )}
           </button>
         </form>
       )}
     </div>
-  )
+  );
 }
 
 export function ContactClient() {
@@ -309,7 +330,8 @@ export function ContactClient() {
               marginBottom: 20,
             }}
           >
-            Let&apos;s start a <span style={{ color: '#d4e84a', WebkitTextStroke: '1px #1a1a1a' }}>conversation</span>
+            Let&apos;s start a{' '}
+            <span style={{ color: '#d4e84a', WebkitTextStroke: '1px #1a1a1a' }}>conversation</span>
           </h1>
           <p className="text-base md:text-lg text-gray-600 leading-relaxed">
             Ready to transform your business? Reach out and our team will get back to you within 24 hours.
@@ -322,5 +344,5 @@ export function ContactClient() {
         </div>
       </div>
     </section>
-  )
+  );
 }

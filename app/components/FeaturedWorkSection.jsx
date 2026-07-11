@@ -68,6 +68,16 @@ function ProjectCard({ project, index }) {
   const imageRef = useRef(null)
   const overlayRef = useRef(null)
   const viewProjectRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const hoverTlRef = useRef(null)
   const rotateXTo = useRef(null)
@@ -191,7 +201,8 @@ function ProjectCard({ project, index }) {
               alt={project.client}
               style={{
                 width: '100%',
-                height: '320px',
+                height: isMobile ? 'auto' : '320px',
+                aspectRatio: isMobile ? '16/9' : 'auto',
                 objectFit: 'cover',
                 borderRadius: 12,
                 display: 'block',

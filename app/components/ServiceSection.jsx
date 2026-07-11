@@ -1,5 +1,7 @@
 'use client'
 
+import { useRef, useEffect, useState } from 'react'
+
 const services = [
   {
     id: 1,
@@ -108,6 +110,18 @@ const CheckIcon = () => (
 )
 
 export default function ServicesSection() {
+  const scrollContainerRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <section style={{
       marginTop: '20px',
@@ -268,16 +282,54 @@ export default function ServicesSection() {
         .cta-button:hover .cta-button-icon {
           transform: translateX(3px);
         }
+
+        /* Mobile horizontal scroll styles */
+        @media (max-width: 768px) {
+          .services-grid {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: minmax(300px, 340px);
+            grid-template-columns: unset;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 16px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+          }
+          .service-card {
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+          }
+          .service-card-image-wrapper {
+            flex-shrink: 0;
+          }
+          .service-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+          }
+          .service-card-items {
+            flex: 1;
+          }
+          .service-card:hover {
+            transform: none;
+          }
+          .service-card:hover .service-card-image {
+            transform: scale(0.85);
+          }
+        }
+
         @media (max-width: 1024px) {
           .services-grid {
             gap: 20px;
           }
         }
         @media (max-width: 900px) {
-          .services-grid {
-            grid-template-columns: 1fr;
-            gap: 24px;
-          }
           .cta-bar {
             flex-direction: column;
             align-items: flex-start !important;
@@ -303,6 +355,9 @@ export default function ServicesSection() {
           .cta-button-icon {
             width: 28px;
             height: 28px;
+          }
+          .services-grid {
+            grid-auto-columns: minmax(280px, 300px);
           }
         }
       `}</style>
@@ -366,24 +421,37 @@ export default function ServicesSection() {
         ))}
       </div>
 
-      <div className="cta-bar">
-        <div>
-          <h3 className="cta-title">
-            Are you interested in a quoted project?
-          </h3>
-          <p className="cta-desc">
-            If you have specific ideas, requirements, or questions about our services or process, feel free to share them and we can provide assistance accordingly.
-          </p>
+      {/* Scroll indicators for mobile */}
+      {isMobile && (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 8,
+          marginTop: 24,
+        }}>
+          {/* <div style={{
+            width: 40,
+            height: 4,
+            background: '#1a1a1a',
+            borderRadius: 2,
+            opacity: 0.3,
+          }} />
+          <div style={{
+            width: 40,
+            height: 4,
+            background: '#1a1a1a',
+            borderRadius: 2,
+            opacity: 0.1,
+          }} />
+          <div style={{
+            width: 40,
+            height: 4,
+            background: '#1a1a1a',
+            borderRadius: 2,
+            opacity: 0.1,
+          }} /> */}
         </div>
-        <button className="cta-button">
-          SEND INQUIRY
-          <div className="cta-button-icon">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="#1a1a1a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-        </button>
-      </div>
+      )}
     </section>
   )
 }

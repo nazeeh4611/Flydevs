@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useRef, useEffect, useState } from 'react'
 
 const testimonials = [
   {
@@ -126,6 +127,18 @@ const testimonials = [
 ]
 
 export default function TestimonialsSection() {
+  const scrollContainerRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   return (
     <section style={{
       background: '#f5f5f0',
@@ -153,11 +166,23 @@ export default function TestimonialsSection() {
         What our clients<br />say about us
       </h2>
 
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-        gap: 20,
-      }}>
+      {/* Scrollable container for mobile */}
+      <div
+        ref={scrollContainerRef}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? 'unset' : 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridAutoFlow: isMobile ? 'column' : 'unset',
+          gridAutoColumns: isMobile ? 'minmax(280px, 300px)' : 'unset',
+          gap: 20,
+          overflowX: isMobile ? 'auto' : 'visible',
+          overflowY: isMobile ? 'hidden' : 'visible',
+          paddingBottom: isMobile ? 16 : 0,
+          scrollSnapType: isMobile ? 'x mandatory' : 'unset',
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: isMobile ? 'thin' : 'unset',
+        }}
+      >
         {testimonials.map(t => (
           <div key={t.id} style={{
             background: t.bg,
@@ -165,16 +190,12 @@ export default function TestimonialsSection() {
             padding: '36px 32px 32px',
             display: 'flex',
             flexDirection: 'column',
+            scrollSnapAlign: isMobile ? 'start' : 'unset',
+            flexShrink: 0,
+            height: isMobile ? 'auto' : 'unset',
+            minHeight: isMobile ? 320 : 'unset',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: 10,
-                overflow: 'hidden', flexShrink: 0,
-                background: t.textColor === '#fff' ? 'rgba(255,255,255,0.1)' : '#fff',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <Image src={t.src} alt={t.name} width={44} height={44} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
-              </div>
               <span style={{
                 fontSize: 16, fontWeight: 700, letterSpacing: '-0.01em',
                 color: t.textColor, lineHeight: 1.2,
@@ -208,6 +229,38 @@ export default function TestimonialsSection() {
           </div>
         ))}
       </div>
+
+      {/* Scroll indicators for mobile */}
+      {isMobile && (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 8,
+          marginTop: 24,
+        }}>
+          {/* <div style={{
+            width: 40,
+            height: 4,
+            background: '#1a1a1a',
+            borderRadius: 2,
+            opacity: 0.3,
+          }} />
+          <div style={{
+            width: 40,
+            height: 4,
+            background: '#1a1a1a',
+            borderRadius: 2,
+            opacity: 0.1,
+          }} />
+          <div style={{
+            width: 40,
+            height: 4,
+            background: '#1a1a1a',
+            borderRadius: 2,
+            opacity: 0.1,
+          }} /> */}
+        </div>
+      )}
     </section>
   )
 }
