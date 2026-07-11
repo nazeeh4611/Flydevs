@@ -1,117 +1,136 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import Image from 'next/image'
 import { useState } from 'react'
+import { Menu, X } from 'lucide-react'
 
 export default function Navigation() {
   const pathname = usePathname()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
 
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Services', href: '/services' },
+    { name: 'What We Did!', href: '/work' },
     { name: 'About', href: '/about' },
-    { name: 'What we did!', href: '/work' },
   ]
 
-  // Close menu when a link is clicked
-  const handleLinkClick = () => {
-    setIsMenuOpen(false)
+  const closeMenu = () => {
+    setIsOpen(false)
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#f7f5f2]/80 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-1 text-black">
-          <Image
-            src="/fdlogo-1.avif"
-            alt="Company Logo"
-            width={190}
-            height={80}
-            className="object-contain"
-            priority
-          />
-        </Link>
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#f7f5f2]/95 backdrop-blur-xl border-b border-zinc-200">
+        <div className="max-w-7xl mx-auto h-[72px] px-5 md:px-12 flex items-center justify-between">
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+          <Link href="/" onClick={closeMenu}>
+            <Image
+              src="/fdlogo-1.avif"
+              alt="FlyDevs Global"
+              width={190}
+              height={70}
+              className="w-[135px] md:w-[190px] h-auto object-contain"
+              priority
+            />
+          </Link>
+
+          <div className="hidden md:flex items-center gap-10">
+            {navLinks.map((link) => {
+              const active = pathname === link.href
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`uppercase tracking-[0.2em] text-[11px] transition-all duration-300 ${
+                    active
+                      ? 'text-black font-semibold'
+                      : 'text-zinc-500 hover:text-black'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              )
+            })}
+
+            <Link
+              href="/contact"
+              className="bg-black text-white px-6 py-3 rounded-full uppercase tracking-[0.2em] text-[11px] hover:bg-zinc-800 transition-colors"
+            >
+              Let&apos;s Talk
+            </Link>
+          </div>
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden h-10 w-10 flex items-center justify-center"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? (
+              <X size={28} strokeWidth={1.8} />
+            ) : (
+              <Menu size={28} strokeWidth={1.8} />
+            )}
+          </button>
+
+        </div>
+      </header>
+
+      <div
+        className={`fixed top-[72px] left-0 right-0 z-40 bg-[#f7f5f2] md:hidden transition-all duration-300 ${
+          isOpen
+            ? 'translate-y-0 opacity-100 visible'
+            : '-translate-y-5 opacity-0 invisible'
+        }`}
+      >
+        <nav className="px-7 py-4">
+
           {navLinks.map((link) => {
-            const isActive = pathname === link.href
+            const active = pathname === link.href
 
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-[10px] uppercase tracking-[0.2em] transition-colors ${
-                  isActive
-                    ? 'text-black font-semibold border-b-2 border-black pb-1'
-                    : 'text-gray-500 hover:text-black'
-                }`}
+                onClick={closeMenu}
+                className="group flex items-center justify-between border-b border-zinc-200 py-6"
               >
-                {link.name}
+                <span
+                  className={`text-[18px] font-medium transition-colors ${
+                    active
+                      ? 'text-[#5AD50E]'
+                      : 'text-zinc-800 group-hover:text-black'
+                  }`}
+                >
+                  {link.name}
+                </span>
+
+                <span
+                  className={`text-xl transition-all ${
+                    active
+                      ? 'text-[#5AD50E]'
+                      : 'text-zinc-300 group-hover:text-black group-hover:translate-x-1'
+                  }`}
+                >
+                  →
+                </span>
               </Link>
             )
           })}
 
           <Link
             href="/contact"
-            className="bg-black text-white px-5 py-2.5 rounded-full text-[10px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-zinc-800"
+            onClick={closeMenu}
+            className="mt-8 flex h-14 w-full items-center justify-center rounded-full bg-black text-white uppercase tracking-[0.18em] text-sm font-medium transition-all duration-300 hover:bg-zinc-800"
           >
             Let&apos;s Talk
           </Link>
-        </div>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden flex flex-col gap-1.5 z-50"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span className={`w-5 h-[1.5px] bg-black transition-all duration-300 ${
-            isMenuOpen ? 'rotate-45 translate-y-2' : ''
-          }`}></span>
-          <span className={`w-5 h-[1.5px] bg-black transition-all duration-300 ${
-            isMenuOpen ? 'opacity-0' : ''
-          }`}></span>
-          <span className={`w-5 h-[1.5px] bg-black transition-all duration-300 ${
-            isMenuOpen ? '-rotate-45 -translate-y-2' : ''
-          }`}></span>
-        </button>
-
-        {/* Mobile Navigation Menu */}
-        <div className={`fixed inset-0 bg-[#f7f5f2] flex flex-col items-center justify-center gap-8 transition-all duration-300 md:hidden ${
-          isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}>
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href
-
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={handleLinkClick}
-                className={`text-lg uppercase tracking-[0.2em] transition-colors ${
-                  isActive
-                    ? 'text-black font-semibold border-b-2 border-black pb-1'
-                    : 'text-gray-500 hover:text-black'
-                }`}
-              >
-                {link.name}
-              </Link>
-            )
-          })}
-
-          <Link
-            href="/contact"
-            onClick={handleLinkClick}
-            className="bg-black text-white px-8 py-3 rounded-full text-sm tracking-[0.2em] uppercase transition-all duration-300 hover:bg-zinc-800 mt-4"
-          >
-            Let&apos;s Talk
-          </Link>
-        </div>
+        </nav>
       </div>
-    </header>
+    </>
   )
 }
