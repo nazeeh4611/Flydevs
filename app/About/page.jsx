@@ -7,6 +7,7 @@ import { AboutClient } from '../components/AboutClient';
 import SEO from '../components/SEO';
 
 export default function About() {
+    
   return (
     <>
       <SEO
