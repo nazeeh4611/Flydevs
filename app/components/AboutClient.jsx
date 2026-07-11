@@ -530,7 +530,7 @@ function TeamSection() {
       role: 'Founder & CEO',
       desc: 'Founder of Flyhomies Associates with over a decade of expertise in digital transformation, enterprise solutions, and modern technology systems. She leads the company with a clear vision for quality, innovation, and long-term value.',
     },
-    
+
     {
       image: '/co-founder.webp',
       name: 'Hanzitha Moideen',
@@ -731,7 +731,6 @@ export function AboutClient() {
         .animate-float { animation: float 3s ease-in-out infinite; }
         .animate-bounce-slow { animation: bounce-slow 3s ease-in-out infinite; }
       `}</style>
-      <Footer />
     </div>
   );
 }
