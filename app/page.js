@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import LoadingScreen from './components/LoadingScreen'
 import HeroSection from './components/HeroSection'
@@ -27,71 +27,60 @@ function SectionWrapper({ children }) {
 }
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false)
-  const [showLoading, setShowLoading] = useState(false)
+  const [showLoading, setShowLoading] = useState(() => {
+    if (typeof window === 'undefined') return false
 
-  useEffect(() => {
-    setMounted(true)
-
-    const hasVisited = localStorage.getItem('hasVisited')
-
-    if (!hasVisited) {
-      setShowLoading(true)
-    }
-  }, [])
+    return !localStorage.getItem('hasVisited')
+  })
 
   const handleLoadingComplete = () => {
     localStorage.setItem('hasVisited', 'true')
     setShowLoading(false)
   }
 
-  if (!mounted) {
-    return null
-  }
-
   return (
     <>
       <Navigation />
 
-      {showLoading && (
+      {showLoading ? (
         <LoadingScreen onComplete={handleLoadingComplete} />
+      ) : (
+        <main className="relative">
+          <SectionWrapper>
+            <HeroSection />
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <PartnerSection />
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <TextRevealSection />
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <FeaturedWorkSection />
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <ServicesSection />
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <TestimonialsSection />
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <FaqSection />
+          </SectionWrapper>
+
+          <SectionWrapper>
+            <ContactSection />
+          </SectionWrapper>
+
+          <Footer />
+        </main>
       )}
-
-      <main className="relative">
-        <SectionWrapper>
-          <HeroSection />
-        </SectionWrapper>
-
-        <SectionWrapper>
-          <PartnerSection />
-        </SectionWrapper>
-
-        <SectionWrapper>
-          <TextRevealSection />
-        </SectionWrapper>
-
-        <SectionWrapper>
-          <FeaturedWorkSection />
-        </SectionWrapper>
-
-        <SectionWrapper>
-          <ServicesSection />
-        </SectionWrapper>
-
-        <SectionWrapper>
-          <TestimonialsSection />
-        </SectionWrapper>
-
-        <SectionWrapper>
-          <FaqSection />
-        </SectionWrapper>
-
-        <SectionWrapper>
-          <ContactSection />
-        </SectionWrapper>
-
-        <Footer />
-      </main>
     </>
   )
 }
