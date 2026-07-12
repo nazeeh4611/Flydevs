@@ -1,8 +1,8 @@
-// components/Footer.tsx
 'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
+
 export default function Footer() {
   return (
     <>
@@ -21,24 +21,24 @@ export default function Footer() {
           paddingBottom: 40,
         }}>
           <div>
-           <div
-  style={{
-    marginBottom: 16,
-  }}
->
-  <Image
-    src="/fdlogo-1.avif"
-    alt="FLYDEVS"
-    width={190}
-    height={80}
-    priority
-    style={{
-      width: '190px',
-      height: 'auto',
-      objectFit: 'contain',
-    }}
-  />
-</div>
+            <div
+              style={{
+                marginBottom: 16,
+              }}
+            >
+              <Image
+                src="/fdlogo-1.avif"
+                alt="FLYDEVS"
+                width={190}
+                height={80}
+                priority
+                style={{
+                  width: '190px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
             <p style={{
               fontSize: 'clamp(13px, 1vw, 14px)',
               color: 'rgba(255,255,255,0.5)',
@@ -120,8 +120,7 @@ export default function Footer() {
               <li><a href="mailto:flyhomiesinfo@gmail.com" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>flyhomiesinfo@gmail.com</a></li>
               <li><a href="tel:+971504316900" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>+971 50 431 6900</a></li>
               <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Dubai, UAE</span></li>
-                            <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Kochi, Kerala, India</span></li>
-
+              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Kochi, Kerala, India</span></li>
             </ul>
           </div>
         </div>
@@ -146,6 +145,7 @@ export default function Footer() {
             gap: 20,
             fontSize: 'clamp(11px, 0.9vw, 13px)',
             color: 'rgba(255,255,255,0.3)',
+            flexWrap: 'wrap',
           }}>
             <span style={{ cursor: 'pointer' }}>Privacy Policy</span>
             <span style={{ cursor: 'pointer' }}>Terms of Service</span>
@@ -159,25 +159,58 @@ export default function Footer() {
         padding: 'clamp(16px, 2vw, 24px) 0',
         overflow: 'hidden',
         whiteSpace: 'nowrap',
+        position: 'relative',
       }}>
-        <span
+        <div
           style={{
-            fontSize: 'clamp(24px, 3.5vw, 36px)',
-            fontWeight: 800,
-            color: '#1a1a1a',
-            letterSpacing: '-0.01em',
             display: 'inline-block',
             animation: 'marquee 20s linear infinite',
+            whiteSpace: 'nowrap',
           }}
         >
-          FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM •
-        </span>
+          <span
+            style={{
+              fontSize: 'clamp(24px, 3.5vw, 36px)',
+              fontWeight: 800,
+              color: '#1a1a1a',
+              letterSpacing: '-0.01em',
+              display: 'inline-block',
+              paddingRight: '2rem',
+            }}
+          >
+            FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM •
+          </span>
+          <span
+            style={{
+              fontSize: 'clamp(24px, 3.5vw, 36px)',
+              fontWeight: 800,
+              color: '#1a1a1a',
+              letterSpacing: '-0.01em',
+              display: 'inline-block',
+              paddingRight: '2rem',
+            }}
+          >
+            FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM •
+          </span>
+        </div>
       </div>
 
       <style jsx>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        
+        @media (max-width: 768px) {
+          footer > div:first-child {
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          footer > div:first-child {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
     </>
