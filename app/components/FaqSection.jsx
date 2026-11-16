@@ -1,177 +1,114 @@
 'use client'
 
-import { useState } from 'react'
+import { useId, useState } from 'react'
+import { Plus } from 'lucide-react'
+import { ButtonLink, Eyebrow } from './ui'
 
 const faqs = [
   {
-    id: 1,
-    question: "What are FLYDEVS's areas of expertise as a design & development agency?",
-    answer: "We specialize in brand identity, web design, and full-stack development. Our team handles everything from strategy and UX to production-ready front-end and back-end builds, so you get one team accountable for the whole experience.",
+    question: 'What does Flydevs specialise in?',
+    answer:
+      'Brand identity, web design and full-stack development. We handle everything from strategy and UX to production-ready front-end and back-end builds, so one team is accountable for the whole experience.',
   },
   {
-    id: 2,
-    question: 'What is the design & development process you follow at FLYDEVS?',
-    answer: "We move through discovery, design, and build in tight loops, sharing work early and often so feedback shapes the product before it's locked in. Typically: discovery & strategy, wireframes & UI design, development, QA, and launch.",
+    question: 'What process do you follow?',
+    answer:
+      "We move through discovery, design and build in tight loops, sharing work early so feedback shapes the product before it's locked in. Typically: discovery and strategy, wireframes and UI design, development, QA and launch.",
   },
   {
-    id: 3,
-    question: 'How is FLYDEVS different from other agencies?',
-    answer: 'We stay small and senior on purpose. Every project is led by people who designed and shipped the work themselves, not handed off to juniors after the pitch. That means faster decisions, fewer handoffs, and a final product that matches the original vision.',
+    question: 'How are you different from other agencies?',
+    answer:
+      'We stay small and senior on purpose. Every project is led by the people who design and ship the work, not handed to juniors after the pitch. That means faster decisions, fewer handoffs and a result that matches the original vision.',
   },
   {
-    id: 4,
-    question: 'What are the models of engagement that you have?',
-    answer: 'We work on fixed-scope projects, monthly retainers, and embedded team extensions, depending on what your timeline and budget call for. We\'ll recommend the model that fits once we understand your goals.',
+    question: 'How can we work together?',
+    answer:
+      "Fixed-scope projects, monthly retainers or an embedded team extension, depending on your timeline and budget. We'll recommend the model that fits once we understand your goals.",
   },
   {
-    id: 5,
-    question: 'How does FLYDEVS go about providing Branding services?',
-    answer: "We start with positioning and audience research, then build out visual identity, voice, and guidelines that hold up across every touchpoint, from your website to your pitch deck.",
+    question: 'How do you approach branding?',
+    answer:
+      'We start with positioning and audience research, then build the visual identity, voice and guidelines that hold up across every touchpoint, from your website to your pitch deck.',
   },
   {
-    id: 6,
-    question: 'How does FLYDEVS ensure my digital solution reflects my brand?',
-    answer: "Every design decision is traced back to a brand principle we define together up front. Nothing ships because it looks nice; it ships because it reinforces who you are.",
+    question: 'How do you make sure the product reflects our brand?',
+    answer:
+      "Every design decision traces back to a brand principle we define together up front. Nothing ships because it looks nice; it ships because it reinforces who you are.",
   },
 ]
 
-export default function FaqSection() {
-  const [openId, setOpenId] = useState(2)
+function FaqItem({ faq, open, onToggle }) {
+  const id = useId()
+  return (
+    <div className="border-b border-white/10">
+      <h3>
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={open}
+          aria-controls={`${id}-panel`}
+          id={`${id}-button`}
+          className="flex w-full items-center justify-between gap-6 py-6 text-left"
+        >
+          <span className="text-lg font-medium tracking-[-0.01em] text-white">{faq.question}</span>
+          <span
+            aria-hidden
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-[background-color,transform] duration-200 ${
+              open ? 'rotate-45 bg-lime text-ink' : 'bg-white/[0.06] text-white'
+            }`}
+          >
+            <Plus size={18} strokeWidth={1.75} />
+          </span>
+        </button>
+      </h3>
+      <div
+        id={`${id}-panel`}
+        role="region"
+        aria-labelledby={`${id}-button`}
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      >
+        <div className="overflow-hidden">
+          <p className="max-w-2xl pb-6 pr-12 text-[15px] leading-7 text-white/65">{faq.answer}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
 
-  const toggle = (id) => setOpenId((prev) => (prev === id ? null : id))
+export default function FaqSection() {
+  const [openIndex, setOpenIndex] = useState(0)
 
   return (
-    <section
-      style={{
-        background: '#1a1a1a',
-        borderRadius: 32,
-        padding: 'clamp(60px, 8vw, 90px) clamp(20px, 4vw, 60px) clamp(80px, 10vw, 100px)',
-        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        display: 'grid',
-        gridTemplateColumns: '1fr',
-        gap: 40,
-        position: 'relative',
-        margin: '0 20px',
-      }}
-    >
-      <div>
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            border: '1.5px solid rgba(255,255,255,0.85)',
-            borderRadius: 999,
-            padding: '6px 18px',
-            fontSize: 12,
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            color: '#fff',
-            marginBottom: 28,
-          }}
-        >
-          <span style={{ color: '#ff5a1f' }}>?</span> FAQ
-        </div>
-
-        <h2
-          style={{
-            fontSize: 'clamp(38px, 5vw, 64px)',
-            fontWeight: 800,
-            color: '#fff',
-            lineHeight: 1.05,
-            letterSpacing: '-0.03em',
-            margin: 0,
-            marginBottom: 'clamp(32px, 4vw, 48px)',
-          }}
-        >
-          Answers to
-          <br />
-          common questions
-        </h2>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        {faqs.map((f) => {
-          const isOpen = openId === f.id
-          return (
-            <div
-              key={f.id}
-              style={{
-                background: '#262626',
-                borderRadius: 18,
-                padding: '24px 28px',
-                cursor: 'pointer',
-                transition: 'background 0.25s ease',
-              }}
-              onClick={() => toggle(f.id)}
+    <section className="px-3 sm:px-4" aria-labelledby="faq-title">
+      <div className="on-dark mx-auto max-w-[1400px] rounded-[28px] bg-ink py-16 md:py-24">
+        <div className="shell grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
+          <div>
+            <Eyebrow dark>FAQ</Eyebrow>
+            <h2
+              id="faq-title"
+              className="mt-4 text-[clamp(2rem,4.6vw,3.5rem)] font-bold leading-[1.02] tracking-[-0.04em] text-white"
             >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 20,
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 'clamp(16px, 1.4vw, 18px)',
-                    fontWeight: 700,
-                    color: '#fff',
-                    lineHeight: 1.35,
-                  }}
-                >
-                  {f.question}
-                </span>
-                <span
-                  style={{
-                    flexShrink: 0,
-                    width: 32,
-                    height: 32,
-                    borderRadius: '50%',
-                    background: isOpen ? '#d4e84a' : 'rgba(255,255,255,0.08)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'transform 0.25s ease, background 0.25s ease',
-                    transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}
-                >
-                  <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
-                    <path
-                      d="M1 1L7 7L13 1"
-                      stroke={isOpen ? '#1a1a1a' : '#fff'}
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </div>
+              Answers to common questions
+            </h2>
+            <p className="mt-4 max-w-sm text-[17px] leading-7 text-white/65">
+              Something else on your mind? We reply within one working day.
+            </p>
+            <ButtonLink href="/contact" variant="lime" className="mt-8">
+              Ask us directly
+            </ButtonLink>
+          </div>
 
-              <div
-                style={{
-                  maxHeight: isOpen ? 200 : 0,
-                  overflow: 'hidden',
-                  transition: 'max-height 0.3s ease',
-                }}
-              >
-                <p
-                  style={{
-                    marginTop: 16,
-                    marginBottom: 0,
-                    fontSize: 'clamp(14px, 1.1vw, 14.5px)',
-                    lineHeight: 1.7,
-                    color: 'rgba(255,255,255,0.65)',
-                    paddingRight: 'clamp(0px, 4vw, 40px)',
-                  }}
-                >
-                  {f.answer}
-                </p>
-              </div>
-            </div>
-          )
-        })}
+          <div className="border-t border-white/10">
+            {faqs.map((f, i) => (
+              <FaqItem
+                key={f.question}
+                faq={f}
+                open={openIndex === i}
+                onToggle={() => setOpenIndex((cur) => (cur === i ? -1 : i))}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

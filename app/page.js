@@ -1,11 +1,7 @@
-'use client'
-
-import { useState } from 'react'
-
-import LoadingScreen from './components/LoadingScreen'
+import Navigation from './components/Navigation'
+import LoadingGate from './components/LoadingGate'
 import HeroSection from './components/HeroSection'
 import PartnerSection from './components/PartnerSection'
-import Navigation from './components/Navigation'
 import TextRevealSection from './components/TextRevealSection'
 import FeaturedWorkSection from './components/FeaturedWorkSection'
 import ServicesSection from './components/ServiceSection'
@@ -14,73 +10,27 @@ import FaqSection from './components/FaqSection'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 
-function SectionWrapper({ children }) {
-  return (
-    <div
-      style={{
-        marginBottom: 'clamp(40px, 8vw, 100px)',
-      }}
-    >
-      {children}
-    </div>
-  )
-}
+// Runs before first paint: marks first-time visitors so a cover hides the page
+// until the intro screen mounts (no flash, no hydration mismatch).
+const firstVisitScript = `try{if(!localStorage.getItem('hasVisited')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.dataset.intro='1'}}catch(e){}`
 
 export default function Home() {
-  const [showLoading, setShowLoading] = useState(() => {
-    if (typeof window === 'undefined') return false
-
-    return !localStorage.getItem('hasVisited')
-  })
-
-  const handleLoadingComplete = () => {
-    localStorage.setItem('hasVisited', 'true')
-    setShowLoading(false)
-  }
-
   return (
     <>
+      <script dangerouslySetInnerHTML={{ __html: firstVisitScript }} />
+      <LoadingGate />
       <Navigation />
-
-      {showLoading ? (
-        <LoadingScreen onComplete={handleLoadingComplete} />
-      ) : (
-        <main className="relative">
-          <SectionWrapper>
-            <HeroSection />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <PartnerSection />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <TextRevealSection />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <FeaturedWorkSection />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <ServicesSection />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <TestimonialsSection />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <FaqSection />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <ContactSection />
-          </SectionWrapper>
-
-          <Footer />
-        </main>
-      )}
+      <main id="main">
+        <HeroSection />
+        <PartnerSection />
+        <TextRevealSection />
+        <FeaturedWorkSection />
+        <ServicesSection />
+        <TestimonialsSection />
+        <FaqSection />
+        <ContactSection />
+      </main>
+      <Footer />
     </>
   )
 }

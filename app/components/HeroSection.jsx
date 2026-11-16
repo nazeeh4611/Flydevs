@@ -1,294 +1,219 @@
 'use client'
 
-import { useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLayoutEffect } from 'react'
-gsap.registerPlugin(ScrollTrigger)
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
+import { Asterisk } from 'lucide-react'
+import { ButtonLink } from './ui'
+
+const WORDS = ['websites', 'software', 'apps', 'VoIP', 'brands']
+const SERVICES = ['Websites', 'Custom software', 'Mobile apps', 'VoIP systems', 'Branding', 'UI/UX design', 'Digital marketing', 'Support & care']
+
+/** Cycles through what we ship, rolling each word in with a lime marker sweep. */
+function RotatingWord() {
+  const [i, setI] = useState(0)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const id = setInterval(() => setI((n) => (n + 1) % WORDS.length), 2200)
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <span className="relative inline-block whitespace-nowrap align-bottom">
+      <span className="sr-only">{WORDS.join(', ')}</span>
+      <span aria-hidden key={i} className="relative isolate inline-block px-[0.12em]">
+        <span className="word-roll inline-block">{WORDS[i]}</span>
+        <span className="marker-sweep absolute inset-x-0 inset-y-[0.06em] -z-10 rounded-[0.12em] bg-lime" />
+      </span>
+    </span>
+  )
+}
+
+/** Splits text into letters the cursor can push heavier. */
+function Letters({ text }) {
+  return (
+    <>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden>
+        {text.split(' ').map((word, wi, arr) => (
+          <span key={wi} className="inline-block whitespace-nowrap">
+            {[...word].map((ch, ci) => (
+              <span key={ci} data-letter className="inline-block">
+                {ch}
+              </span>
+            ))}
+            {wi < arr.length - 1 && <span className="inline-block">&nbsp;</span>}
+          </span>
+        ))}
+      </span>
+    </>
+  )
+}
+
+function Line({ children, delay }) {
+  return (
+    <span className="block overflow-hidden pb-[0.08em]">
+      <span className="line-up block" style={{ animationDelay: `${delay}ms` }}>
+        {children}
+      </span>
+    </span>
+  )
+}
 
 export default function HeroSection() {
-  const heroRef = useRef(null)
-  const containerRef = useRef(null)
-  const imageWrapRef = useRef(null)
-  const imageRef = useRef(null)
-  const imageCardRef = useRef(null)
-  const ctaRef = useRef(null)
+  const headRef = useRef(null)
+  const sectionRef = useRef(null)
+  const logoRef = useRef(null)
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: {
-          ease: 'power3.out',
-        },
+  // The logo leans gently toward the cursor
+  useEffect(() => {
+    const section = sectionRef.current
+    const logo = logoRef.current
+    if (!section || !logo) return
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    const onMove = (e) => {
+      const x = e.clientX / window.innerWidth - 0.5
+      const y = e.clientY / window.innerHeight - 0.5
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        logo.style.transform = `translate3d(${x * -24}px, ${y * -18}px, 0) rotate(${x * 4}deg)`
       })
-
-      tl.fromTo(
-        '.hero-badge',
-        {
-          opacity: 0,
-          y: 20,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-        }
-      )
-        .fromTo(
-          '.hero-title-line',
-          {
-            opacity: 0,
-            y: 40,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.08,
-            ease: 'power4.out',
-          },
-          '-=0.3'
-        )
-        .fromTo(
-          '.hero-subtitle',
-          {
-            opacity: 0,
-            y: 20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-          },
-          '-=0.6'
-        )
-        .fromTo(
-          '.hero-cta',
-          {
-            opacity: 0,
-            y: 20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-          },
-          '-=0.5'
-        )
-        .fromTo(
-          imageWrapRef.current,
-          {
-            clipPath: 'inset(0% 0% 100% 0%)',
-          },
-          {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 1.4,
-            ease: 'power4.out',
-          },
-          '-=0.9'
-        )
-        .fromTo(
-          imageRef.current,
-          {
-            scale: 1.25,
-          },
-          {
-            scale: 1.05,
-            duration: 1.4,
-            ease: 'power4.out',
-          },
-          '-=1.4'
-        )
-
-      if (heroRef.current) {
-        gsap.to(heroRef.current, {
-          scale: 0.97,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: '+=100%',
-            scrub: true,
-          },
-        })
-      }
-
-      if (imageRef.current) {
-        gsap.to(imageRef.current, {
-          scale: 1.15,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: 'top top',
-            end: '+=100%',
-            scrub: true,
-          },
-        })
-      }
-
-      const card = imageCardRef.current
-      const image = imageRef.current
-      if (card && image && window.matchMedia('(pointer: fine)').matches) {
-        const xTo = gsap.quickTo(card, 'rotationY', {
-          duration: 0.6,
-          ease: 'power3.out',
-        })
-        const yTo = gsap.quickTo(card, 'rotationX', {
-          duration: 0.6,
-          ease: 'power3.out',
-        })
-        const imgXTo = gsap.quickTo(image, 'x', {
-          duration: 0.6,
-          ease: 'power3.out',
-        })
-        const imgYTo = gsap.quickTo(image, 'y', {
-          duration: 0.6,
-          ease: 'power3.out',
-        })
-
-        gsap.set(card, { transformPerspective: 900 })
-
-        const handleMove = (e) => {
-          const rect = card.getBoundingClientRect()
-          const relX = (e.clientX - rect.left) / rect.width - 0.5
-          const relY = (e.clientY - rect.top) / rect.height - 0.5
-
-          xTo(relX * 10)
-          yTo(relY * -10)
-          imgXTo(relX * -16)
-          imgYTo(relY * -16)
-        }
-
-        const handleLeave = () => {
-          xTo(0)
-          yTo(0)
-          imgXTo(0)
-          imgYTo(0)
-        }
-
-        card.addEventListener('mousemove', handleMove)
-        card.addEventListener('mouseleave', handleLeave)
-
-        return () => {
-          card.removeEventListener('mousemove', handleMove)
-          card.removeEventListener('mouseleave', handleLeave)
-        }
-      }
-    }, containerRef)
-
+    }
+    const onLeave = () => {
+      logo.style.transform = ''
+    }
+    section.addEventListener('pointermove', onMove)
+    section.addEventListener('pointerleave', onLeave)
     return () => {
-      ctx.revert()
+      section.removeEventListener('pointermove', onMove)
+      section.removeEventListener('pointerleave', onLeave)
+      cancelAnimationFrame(raf)
     }
   }, [])
 
-  useLayoutEffect(() => {
-    const button = ctaRef.current
-    if (!button || !window.matchMedia('(pointer: fine)').matches) return
+  // Letters near the cursor swell toward a heavier weight (Inter is a variable font)
+  useEffect(() => {
+    const head = headRef.current
+    if (!head) return
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const xTo = gsap.quickTo(button, 'x', { duration: 0.4, ease: 'power3.out' })
-    const yTo = gsap.quickTo(button, 'y', { duration: 0.4, ease: 'power3.out' })
+    const letters = [...head.querySelectorAll('[data-letter]')]
+    const BASE = 700
+    const MAX = 900
+    const RADIUS = 220
+    let raf = 0
+    let pointer = null
 
-    const handleMove = (e) => {
-      const rect = button.getBoundingClientRect()
-      const relX = e.clientX - rect.left - rect.width / 2
-      const relY = e.clientY - rect.top - rect.height / 2
-      xTo(relX * 0.3)
-      yTo(relY * 0.4)
+    const render = () => {
+      raf = 0
+      for (const el of letters) {
+        let w = BASE
+        if (pointer) {
+          const r = el.getBoundingClientRect()
+          const dx = pointer.x - (r.left + r.width / 2)
+          const dy = pointer.y - (r.top + r.height / 2)
+          const d = Math.hypot(dx, dy)
+          if (d < RADIUS) w = BASE + (MAX - BASE) * (1 - d / RADIUS) ** 2
+        }
+        el.style.fontWeight = String(Math.round(w))
+      }
+    }
+    const onMove = (e) => {
+      pointer = { x: e.clientX, y: e.clientY }
+      if (!raf) raf = requestAnimationFrame(render)
+    }
+    const onLeave = () => {
+      pointer = null
+      if (!raf) raf = requestAnimationFrame(render)
     }
 
-    const handleLeave = () => {
-      xTo(0)
-      yTo(0)
-    }
-
-    button.addEventListener('mousemove', handleMove)
-    button.addEventListener('mouseleave', handleLeave)
-
+    head.addEventListener('pointermove', onMove)
+    head.addEventListener('pointerleave', onLeave)
     return () => {
-      button.removeEventListener('mousemove', handleMove)
-      button.removeEventListener('mouseleave', handleLeave)
+      head.removeEventListener('pointermove', onMove)
+      head.removeEventListener('pointerleave', onLeave)
+      cancelAnimationFrame(raf)
     }
   }, [])
 
   return (
-    <div ref={containerRef} className="overflow-x-hidden">
-      <section
-        ref={heroRef}
-        className="relative min-h-screen bg-[#f7f5f2] overflow-hidden"
-      >
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pb-16 lg:pb-24 pt-4 sm:pt-6 lg:pt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-10 items-center">
-            <div className="max-w-2xl order-2 lg:order-1">
-              <div className="hero-badge inline-block bg-white/90 backdrop-blur-sm border border-gray-200 rounded-full px-4 sm:px-5 py-1.5 mb-6 opacity-0 max-w-full">
-                <span className="text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase text-gray-600 whitespace-normal">
-                  WE ARE CREATIVE AGENCY BASED IN KERALA, INDIA & DUBAI, UAE
-                </span>
-              </div>
+    <section ref={sectionRef} className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[72px]">
+      <div className="shell flex flex-1 flex-col justify-center py-10 md:py-14">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.6fr)] lg:gap-8">
+          <h1
+            ref={headRef}
+            className="order-2 text-[clamp(2.75rem,6vw,7rem)] font-bold leading-[0.94] tracking-[-0.055em] text-ink lg:order-1"
+          >
+            <Line delay={80}>
+              <span className="text-muted">
+                <Letters text="You bring the idea." />
+              </span>
+            </Line>
+            <Line delay={180}>
+              <Letters text="We design, build" />
+            </Line>
+            <Line delay={280}>
+              <Letters text="and ship" /> <RotatingWord />
+            </Line>
+          </h1>
 
-              <h1 className="font-bold leading-[0.95] tracking-tight text-[clamp(2.5rem,7vw,5.5rem)]">
-                <span className="hero-title-line block opacity-0">
-                  Your in-house
-                </span>
-                <span className="hero-title-line block opacity-0">
-                  design &amp;
-                </span>
-                <span className="hero-title-line block opacity-0 flex-wrap flex items-baseline gap-3 sm:gap-4">
-                  engineering
-                  <span className="text-gray-300">team</span>
-                </span>
-              </h1>
-
-              <p className="hero-subtitle mt-6 max-w-xl text-base md:text-lg text-gray-600 leading-relaxed opacity-0">
-                Together, we can transform forward-thinking ideas into futuristic
-                solutions with our robust technology and scalable design approach.
-              </p>
-
-              <div className="hero-cta mt-10 opacity-0">
-                <button
-                  ref={ctaRef}
-                  className="group bg-black text-white px-7 sm:px-8 py-3 sm:py-3.5 rounded-full text-xs sm:text-sm tracking-wider flex items-center gap-3"
-                >
-                  <span>LET&apos;S TALK</span>
-
-                  <svg
-                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div className="w-full order-1 lg:order-2 relative">
-              <div
-                ref={imageCardRef}
-                className="relative mx-auto max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-none aspect-[4/5] sm:aspect-[4/5] w-full"
-                style={{ willChange: 'transform' }}
-              >
-                <div
-                  ref={imageWrapRef}
-                  className="absolute inset-[-15%] sm:inset-[-20%] flex items-center justify-center overflow-visible"
-                >
-                  <img
-                    ref={imageRef}
-                    src="/fd.avif"
-                    alt="Logo"
-                    className="w-[140%] sm:w-[160%] md:w-[180%] lg:w-[200%] h-[140%] sm:h-[160%] md:h-[180%] lg:h-[200%] object-contain"
-                  />
-                </div>
-              </div>
+          {/* Big logo mark, solid black */}
+          <div className="rise order-1 flex justify-start lg:order-2 lg:justify-end" style={{ animationDelay: '250ms' }}>
+            <div
+              ref={logoRef}
+              className="relative aspect-square w-[140px] transition-transform duration-500 ease-out sm:w-[200px] lg:w-full lg:max-w-[440px]"
+            >
+              <Image
+                src="/fd.avif"
+                alt="Flydevs logo mark"
+                fill
+                priority
+                sizes="(min-width: 1024px) 440px, 200px"
+                className="scale-[1.45] object-contain [filter:brightness(0)]"
+              />
             </div>
           </div>
         </div>
-      </section>
-    </div>
+
+        <div
+          className="rise mt-12 flex flex-col gap-8 border-t border-ink/10 pt-8 md:mt-14 lg:flex-row lg:items-center lg:justify-between"
+          style={{ animationDelay: '420ms' }}
+        >
+          <p className="max-w-[36rem] text-lg leading-8 text-body">
+            Flydevs is the design and engineering team growing businesses in Kochi, Dubai and beyond call on — from
+            first sketch to launch, and long after.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href="/contact">Start a project</ButtonLink>
+            <ButtonLink href="/work" variant="secondary" arrow={false}>
+              See our work
+            </ButtonLink>
+          </div>
+        </div>
+      </div>
+
+      {/* Services band */}
+      <div className="rise border-y border-ink bg-ink py-5 text-white" style={{ animationDelay: '650ms' }}>
+        <div className="overflow-hidden">
+          <ul className="marquee-track" aria-label="What we build">
+            {[0, 1].map((k) =>
+              SERVICES.map((s) => (
+                <li
+                  key={`${k}-${s}`}
+                  aria-hidden={k === 1}
+                  className="flex shrink-0 items-center whitespace-nowrap text-[clamp(1.25rem,2.4vw,2rem)] font-medium tracking-[-0.02em]"
+                >
+                  <span className="px-6 md:px-8">{s}</span>
+                  <Asterisk size={22} strokeWidth={2} className="text-lime" aria-hidden />
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      </div>
+    </section>
   )
 }

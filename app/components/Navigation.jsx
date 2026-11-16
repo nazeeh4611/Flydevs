@@ -3,132 +3,133 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Menu, X, ArrowRight } from 'lucide-react'
+import { navLinks } from '../lib/site'
 
 export default function Navigation() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
-    { name: 'What We Did!', href: '/work' },
-    { name: 'About', href: '/about' },
-  ]
+  // Hairline + solid background once the page scrolls
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-  const closeMenu = () => {
-    setIsOpen(false)
-  }
+  // Lock page scroll and allow Escape while the mobile menu is open
+  useEffect(() => {
+    if (!isOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e) => e.key === 'Escape' && setIsOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [isOpen])
+
+  const close = () => setIsOpen(false)
+  const isActive = (href) => (href === '/' ? pathname === '/' : pathname?.startsWith(href))
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#f7f5f2]/95 backdrop-blur-xl border-b border-zinc-200">
-        <div className="max-w-7xl mx-auto h-[72px] px-5 md:px-12 flex items-center justify-between">
-
-          <Link href="/" onClick={closeMenu}>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-200 ${
+          scrolled || isOpen
+            ? 'border-b border-ink/[0.08] bg-paper/90 backdrop-blur-md'
+            : 'border-b border-transparent bg-paper/0'
+        }`}
+      >
+        <nav className="shell flex h-[72px] items-center justify-between" aria-label="Main">
+          <Link href="/" onClick={close} className="-m-1 p-1" aria-label="Flydevs Global home">
             <Image
               src="/fdlogo-1.avif"
-              alt="FlyDevs Global"
-              width={190}
-              height={70}
-              className="w-[135px] md:w-[190px] h-auto object-contain"
+              alt="Flydevs Global"
+              width={1390}
+              height={396}
+              className="h-9 w-auto md:h-10"
               priority
             />
           </Link>
 
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => {
-              const active = pathname === link.href
-
+              const active = isActive(link.href)
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`uppercase tracking-[0.2em] text-[11px] transition-all duration-300 ${
-                    active
-                      ? 'text-black font-semibold'
-                      : 'text-zinc-500 hover:text-black'
+                  aria-current={active ? 'page' : undefined}
+                  className={`rounded-full px-4 py-2 text-[15px] transition-colors duration-150 ${
+                    active ? 'bg-raised font-medium text-ink' : 'text-body hover:text-ink'
                   }`}
                 >
                   {link.name}
                 </Link>
               )
             })}
-
             <Link
               href="/contact"
-              className="bg-black text-white px-6 py-3 rounded-full uppercase tracking-[0.2em] text-[11px] hover:bg-zinc-800 transition-colors"
+              aria-current={isActive('/contact') ? 'page' : undefined}
+              className="ml-3 inline-flex h-10 items-center rounded-full bg-ink px-5 text-[15px] font-medium text-white transition-colors duration-150 hover:bg-ink-3"
             >
-              Let&apos;s Talk
+              Start a project
             </Link>
           </div>
 
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden h-10 w-10 flex items-center justify-center"
-            aria-label="Toggle menu"
+            type="button"
+            onClick={() => setIsOpen((v) => !v)}
+            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full md:hidden"
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
-            {isOpen ? (
-              <X size={28} strokeWidth={1.8} />
-            ) : (
-              <Menu size={28} strokeWidth={1.8} />
-            )}
+            {isOpen ? <X size={24} strokeWidth={1.75} /> : <Menu size={24} strokeWidth={1.75} />}
           </button>
-
-        </div>
+        </nav>
       </header>
 
       <div
-        className={`fixed top-[72px] left-0 right-0 z-40 bg-[#f7f5f2] md:hidden transition-all duration-300 ${
-          isOpen
-            ? 'translate-y-0 opacity-100 visible'
-            : '-translate-y-5 opacity-0 invisible'
+        id="mobile-menu"
+        className={`fixed inset-x-0 bottom-0 top-[72px] z-40 bg-paper transition-[opacity,transform] duration-200 ease-out md:hidden ${
+          isOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'
         }`}
       >
-        <nav className="px-7 py-4">
-
-          {navLinks.map((link) => {
-            const active = pathname === link.href
-
+        <nav className="shell flex h-full flex-col pb-8 pt-4" aria-label="Mobile">
+          {[...navLinks, { name: 'Contact', href: '/contact' }].map((link) => {
+            const active = isActive(link.href)
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={closeMenu}
-                className="group flex items-center justify-between border-b border-zinc-200 py-6"
+                onClick={close}
+                aria-current={active ? 'page' : undefined}
+                className="flex items-center justify-between border-b border-ink/[0.08] py-5"
               >
-                <span
-                  className={`text-[18px] font-medium transition-colors ${
-                    active
-                      ? 'text-[#5AD50E]'
-                      : 'text-zinc-800 group-hover:text-black'
-                  }`}
-                >
+                <span className={`text-2xl tracking-[-0.02em] ${active ? 'font-medium text-ink' : 'text-body'}`}>
                   {link.name}
                 </span>
-
-                <span
-                  className={`text-xl transition-all ${
-                    active
-                      ? 'text-[#5AD50E]'
-                      : 'text-zinc-300 group-hover:text-black group-hover:translate-x-1'
-                  }`}
-                >
-                  →
-                </span>
+                {active ? (
+                  <span aria-hidden className="h-2 w-2 rounded-full bg-lime ring-4 ring-lime/30" />
+                ) : (
+                  <ArrowRight size={20} strokeWidth={1.5} className="text-muted" aria-hidden />
+                )}
               </Link>
             )
           })}
-
           <Link
             href="/contact"
-            onClick={closeMenu}
-            className="mt-8 flex h-14 w-full items-center justify-center rounded-full bg-black text-white uppercase tracking-[0.18em] text-sm font-medium transition-all duration-300 hover:bg-zinc-800"
+            onClick={close}
+            className="mt-auto flex h-14 items-center justify-center rounded-full bg-ink text-base font-medium text-white"
           >
-            Let&apos;s Talk
+            Start a project
           </Link>
-
         </nav>
       </div>
     </>

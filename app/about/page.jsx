@@ -1,25 +1,23 @@
-"use client";
+import Navigation from '../components/Navigation'
+import Footer from '../components/Footer'
+import { AboutClient } from '../components/AboutClient'
 
-import React from 'react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
-import { AboutClient } from '../components/AboutClient';
-import SEO from '../components/SEO';
+export const metadata = {
+  title: 'About',
+  description:
+    'From a 2015 classroom startup to a technology partner in Dubai and Kochi — the story, people and expertise behind Flydevs Global and Nacrosoft Technology.',
+  alternates: { canonical: '/about' },
+  openGraph: { url: '/about', title: 'About · Flydevs Global' },
+}
 
-export default function About() {
-    
+export default function AboutPage() {
   return (
     <>
-      <SEO
-        title="About FLYDEVS GLOBAL - Creative Agency & Digital Solutions"
-        description="Learn about FLYDEVS GLOBAL, a leading creative agency providing innovative digital solutions, web development, and design services. We build digital experiences people love."
-        keywords="about FLYDEVS GLOBAL, creative agency Dubai, digital solutions, web development agency, design agency, innovative technology, digital transformation, creative design, engineering team, UI/UX design, brand development, digital experiences"
-        ogImage="/about-og-image.jpg"
-        ogUrl="https://flydevsglobal.com/about"
-      />
       <Navigation />
-      <AboutClient />
+      <main id="main">
+        <AboutClient />
+      </main>
       <Footer />
     </>
-  );
+  )
 }

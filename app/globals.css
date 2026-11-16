@@ -1,11 +1,211 @@
 @import "tailwindcss";
 
-html,
-body {
-  background: #f7f5f2;
-  overflow-x: hidden;
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Warm neutral ramp */
+  --color-paper: #f7f5f2;
+  --color-card: #fdfcfa;
+  --color-raised: #efebe4;
+  --color-ink: #1a1a1a;
+  --color-ink-2: #232220;
+  --color-ink-3: #2c2b28;
+  --color-body: #57524b;
+  --color-muted: #7b7266;
+
+  /* Brand accent (from the logo) */
+  --color-lime: #d4e84a;
+  --color-lime-deep: #5f6b0c;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  background: var(--color-paper);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: var(--font-inter);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-lime);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.on-dark :focus-visible,
+.on-dark:focus-visible {
+  outline-color: var(--color-lime);
+}
+
+/* First-visit cover, removed when the intro screen finishes */
+html[data-intro='1'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--color-lime);
+}
+
+/* Layout helpers */
+.shell {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+@media (min-width: 768px) {
+  .shell {
+    padding-inline: 32px;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Entrance used by the Reveal component */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero entrance, one short fade and rise */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 600ms var(--ease-out) both;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .rise {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* Hero type effects */
+@keyframes line-up {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+.line-up {
+  animation: line-up 900ms var(--ease-out) both;
+}
+
+@keyframes word-roll {
+  from {
+    opacity: 0;
+    transform: translateY(40%);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.word-roll {
+  animation: word-roll 600ms var(--ease-out) both;
+}
+
+@keyframes marker-sweep {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.marker-sweep {
+  transform-origin: left center;
+  animation: marker-sweep 700ms var(--ease-out) 250ms both;
+}
+
+/* Letters swell smoothly under the cursor */
+[data-letter] {
+  transition: font-weight 260ms var(--ease-out);
+}
+
+@keyframes scroll-nudge {
+  0%, 60%, 100% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(3px);
+  }
+}
+.scroll-nudge {
+  animation: scroll-nudge 2.4s var(--ease-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line-up,
+  .word-roll,
+  .marker-sweep,
+  .scroll-nudge {
+    animation: none;
+  }
 }

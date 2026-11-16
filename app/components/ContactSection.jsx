@@ -1,216 +1,65 @@
-// components/ContactSection.tsx
-'use client'
+import { ArrowUpRight, Mail, Phone } from 'lucide-react'
+import { ButtonLink, Eyebrow } from './ui'
+import { site } from '../lib/site'
 
 export default function ContactSection() {
+  const contacts = [
+    { label: 'Email us', value: site.email, href: `mailto:${site.email}`, Icon: Mail },
+    ...site.phones.map((p) => ({ label: `Call ${p.label}`, value: p.display, href: p.href, Icon: Phone })),
+  ]
+
   return (
-    <section
-      style={{
-        background: '#1a1a1a',
-        borderRadius: 32,
-        padding: '8px',
-        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        position: 'relative',
-        overflow: 'hidden',
-        marginTop: 120,
-        margin: '0 20px',
-      }}
-    >
-      <div
-        style={{
-          background: '#e8f25a',
-          borderRadius: 26,
-          padding: 'clamp(50px, 6vw, 70px) clamp(24px, 5vw, 60px) clamp(60px, 8vw, 90px)',
-          textAlign: 'center',
-          position: 'relative',
-        }}
-      >
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            border: '1.5px solid #1a1a1a',
-            borderRadius: 999,
-            padding: '6px 18px',
-            fontSize: 'clamp(10px, 1vw, 12px)',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
-            color: '#1a1a1a',
-            marginBottom: 32,
-          }}
-        >
-          💬 AVAILABLE FOR NEW PROJECTS
-        </div>
-
-        <h2
-          style={{
-            fontSize: 'clamp(32px, 6.5vw, 88px)',
-            fontWeight: 800,
-            color: '#1a1a1a',
-            lineHeight: 1.05,
-            letterSpacing: '-0.03em',
-            margin: 0,
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '0.3em',
-          }}
-        >
-          <span>Interested in</span>
-          <span style={{ width: '100%' }} />
-          <span>working</span>
-          <button
-            style={{
-              background: '#1a1a1a',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 999,
-              padding: 'clamp(16px, 2vw, 22px) clamp(24px, 3vw, 36px)',
-              fontSize: 'clamp(16px, 1.6vw, 18px)',
-              fontWeight: 800,
-              letterSpacing: '-0.01em',
-              cursor: 'pointer',
-              lineHeight: 1.2,
-            }}
-          >
-            LET&apos;S
-            <br />
-            CONNECT!!!
-          </button>
-          <span>together?</span>
-        </h2>
-      </div>
-
-      <div
-        style={{
-          padding: 'clamp(40px, 5vw, 70px) clamp(24px, 5vw, 60px) clamp(40px, 5vw, 60px)',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 'clamp(30px, 4vw, 40px)',
-        }}
-      >
-        <div>
-          <p
-            style={{
-              fontStyle: 'italic',
-              fontSize: 'clamp(20px, 3vw, 32px)',
-              color: '#fff',
-              lineHeight: 1.35,
-              margin: 0,
-              marginBottom: 24,
-            }}
-          >
-            &quot;Design creates culture.
-            <br />
-            Culture shapes values.
-            <br />
-            Values determine the future&quot;
-          </p>
-          <span style={{ fontSize: 'clamp(14px, 1.2vw, 16px)', color: 'rgba(255,255,255,0.7)' }}>
-            — Robert L. Peters
-          </span>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 36, alignItems: 'flex-end' }}>
-          <div style={{ textAlign: 'right', width: '100%' }}>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>
-              Start a conversation
-            </div>
-            <a
-              href="mailto:arg@flydevs.com"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 10,
-                fontSize: 'clamp(20px, 2.5vw, 28px)',
-                fontWeight: 600,
-                color: '#fff',
-                textDecoration: 'underline',
-                wordBreak: 'break-all',
-              }}
+    <section className="px-3 py-20 sm:px-4 md:py-28" aria-labelledby="contact-title">
+      <div className="mx-auto max-w-[1400px] overflow-hidden rounded-[28px] bg-lime">
+        <div className="shell grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-end">
+          <div>
+            <Eyebrow>Available for new projects</Eyebrow>
+            <h2
+              id="contact-title"
+              className="mt-4 text-[clamp(2.5rem,6.4vw,5rem)] font-bold leading-[1] tracking-[-0.045em] text-ink"
             >
-              arg@flydevs.com
-              <span
-                style={{
-                  width: 26,
-                  height: 26,
-                  borderRadius: '50%',
-                  background: '#e8f25a',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}
-              >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </a>
+              Interested in working{' '}
+              <span className="text-ink/55">together?</span>
+            </h2>
+            <p className="mt-6 max-w-lg text-lg leading-8 text-ink/70">
+              Tell us what you&apos;re building. We&apos;ll reply within one working day with next steps and a rough
+              timeline.
+            </p>
+            <ButtonLink href="/contact" className="mt-10">
+              Start a project
+            </ButtonLink>
           </div>
 
-          <div style={{ textAlign: 'right', width: '100%' }}>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>
-              Call us
-            </div>
-            <a
-              href="tel:+919833572299"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 10,
-                fontSize: 'clamp(20px, 2.5vw, 28px)',
-                fontWeight: 600,
-                color: '#fff',
-                textDecoration: 'underline',
-              }}
-            >
-              +91 9833 57 2299
-              <span
-                style={{
-                  width: 26,
-                  height: 26,
-                  borderRadius: '50%',
-                  background: '#e8f25a',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}
-              >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 10L10 2M10 2H4M10 2V8" stroke="#1a1a1a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </a>
-          </div>
+          <ul className="divide-y divide-ink/15 border-y border-ink/15">
+            {contacts.map(({ label, value, href, Icon }) => (
+              <li key={href}>
+                <a href={href} className="group flex items-center gap-4 py-5">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-ink/[0.08]">
+                    <Icon size={18} strokeWidth={1.5} aria-hidden />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[13px] text-ink/60">{label}</span>
+                    <span className="block truncate text-lg font-medium tracking-[-0.01em]">{value}</span>
+                  </span>
+                  <ArrowUpRight
+                    size={18}
+                    strokeWidth={1.75}
+                    aria-hidden
+                    className="shrink-0 transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      <div
-        style={{
-          padding: '0 clamp(24px, 5vw, 60px) 36px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 16,
-        }}
-      >
-        <span style={{ fontSize: 'clamp(12px, 1vw, 14px)', color: 'rgba(255,255,255,0.6)' }}>
-          ©2024 FLYDEVS Technologies
-        </span>
-        <div style={{ display: 'flex', gap: 'clamp(16px, 2vw, 28px)', fontSize: 'clamp(12px, 1vw, 14px)', color: '#fff', flexWrap: 'wrap' }}>
-          <span style={{ cursor: 'pointer' }}>Instagram</span>
-          <span style={{ cursor: 'pointer' }}>LinkedIn</span>
-          <span style={{ cursor: 'pointer' }}>Twitter X</span>
-          <span style={{ cursor: 'pointer' }}>Dribbble</span>
-        </div>
-        <a href="#" style={{ fontSize: 'clamp(12px, 1vw, 14px)', color: '#fff', textDecoration: 'underline' }}>
-          Company Deck ↓
-        </a>
-      </div>
+      <figure className="shell mt-16 text-center">
+        <blockquote className="mx-auto max-w-3xl text-[clamp(1.5rem,3vw,2.25rem)] font-semibold leading-[1.25] tracking-[-0.02em] text-ink">
+          &ldquo;Design creates culture. Culture shapes values. Values determine the future.&rdquo;
+        </blockquote>
+        <figcaption className="mt-4 text-sm text-muted">Robert L. Peters</figcaption>
+      </figure>
     </section>
   )
 }

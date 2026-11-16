@@ -1,218 +1,89 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
+import { navLinks, site } from '../lib/site'
+
+const serviceLinks = ['Web development', 'Software development', 'App development', 'Digital marketing', 'VoIP solutions']
 
 export default function Footer() {
+  const year = new Date().getFullYear()
+
   return (
-    <>
-      <footer style={{
-        background: '#1a1a1a',
-        padding: '60px 20px 40px',
-        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-      }}>
-        <div style={{
-          maxWidth: 1200,
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '2fr 1fr 1fr 1fr',
-          gap: 'clamp(30px, 4vw, 50px)',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-          paddingBottom: 40,
-        }}>
-          <div>
-            <div
-              style={{
-                marginBottom: 16,
-              }}
-            >
-              <Image
-                src="/fdlogo-1.avif"
-                alt="FLYDEVS"
-                width={190}
-                height={80}
-                priority
-                style={{
-                  width: '190px',
-                  height: 'auto',
-                  objectFit: 'contain',
-                }}
-              />
-            </div>
-            <p style={{
-              fontSize: 'clamp(13px, 1vw, 14px)',
-              color: 'rgba(255,255,255,0.5)',
-              lineHeight: 1.6,
-              maxWidth: 320,
-            }}>
-              Transforming forward-thinking ideas into futuristic solutions with robust technology and scalable design.
-            </p>
-          </div>
-
-          <div>
-            <h4 style={{
-              fontSize: 14,
-              fontWeight: 700,
-              color: '#fff',
-              marginBottom: 16,
-              letterSpacing: '0.05em',
-            }}>
-              COMPANY
-            </h4>
-            <ul style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 10,
-            }}>
-              <li><Link href="/about" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>About</Link></li>
-              <li><Link href="/work" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>Work</Link></li>
-              <li><Link href="/services" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>Services</Link></li>
-              <li><Link href="/contact" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>Contact</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 style={{
-              fontSize: 14,
-              fontWeight: 700,
-              color: '#fff',
-              marginBottom: 16,
-              letterSpacing: '0.05em',
-            }}>
-              SERVICES
-            </h4>
-            <ul style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 10,
-            }}>
-              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>Web Development</span></li>
-              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>Software Development</span></li>
-              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>App Development</span></li>
-              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', cursor: 'pointer' }}>Digital Marketing</span></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 style={{
-              fontSize: 14,
-              fontWeight: 700,
-              color: '#fff',
-              marginBottom: 16,
-              letterSpacing: '0.05em',
-            }}>
-              CONNECT
-            </h4>
-            <ul style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 10,
-            }}>
-              <li><a href="mailto:flyhomiesinfo@gmail.com" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>flyhomiesinfo@gmail.com</a></li>
-              <li><a href="tel:+971504316900" style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>+971 50 431 6900</a></li>
-              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Dubai, UAE</span></li>
-              <li><span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>Kochi, Kerala, India</span></li>
-            </ul>
-          </div>
+    <footer className="on-dark bg-ink text-white">
+      <div className="shell grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
+        <div>
+          <Link href="/" aria-label="Flydevs Global home" className="inline-block rounded-lg bg-paper px-3 py-2">
+            <Image src="/fdlogo-1.avif" alt="Flydevs Global" width={1390} height={396} className="h-8 w-auto" />
+          </Link>
+          <p className="mt-5 max-w-xs text-[15px] leading-6 text-white/60">
+            Turning forward-thinking ideas into working products with dependable technology and design that scales.
+          </p>
         </div>
 
-        <div style={{
-          maxWidth: 1200,
-          margin: '24px auto 0',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 16,
-        }}>
-          <span style={{
-            fontSize: 'clamp(11px, 0.9vw, 13px)',
-            color: 'rgba(255,255,255,0.3)',
-          }}>
-            © {new Date().getFullYear()} FLYDEVS Technologies. All rights reserved.
-          </span>
-          <div style={{
-            display: 'flex',
-            gap: 20,
-            fontSize: 'clamp(11px, 0.9vw, 13px)',
-            color: 'rgba(255,255,255,0.3)',
-            flexWrap: 'wrap',
-          }}>
-            <span style={{ cursor: 'pointer' }}>Privacy Policy</span>
-            <span style={{ cursor: 'pointer' }}>Terms of Service</span>
-            <span style={{ cursor: 'pointer' }}>Cookie Policy</span>
-          </div>
-        </div>
-      </footer>
+        <nav aria-label="Company">
+          <h2 className="text-sm font-medium text-white">Company</h2>
+          <ul className="mt-4 space-y-3">
+            {[...navLinks.filter((l) => l.href !== '/'), { name: 'Contact', href: '/contact' }].map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="text-[15px] text-white/60 transition-colors duration-150 hover:text-white">
+                  {l.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      <div style={{
-        background: '#e8f25a',
-        padding: 'clamp(16px, 2vw, 24px) 0',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        position: 'relative',
-      }}>
-        <div
-          style={{
-            display: 'inline-block',
-            animation: 'marquee 20s linear infinite',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          <span
-            style={{
-              fontSize: 'clamp(24px, 3.5vw, 36px)',
-              fontWeight: 800,
-              color: '#1a1a1a',
-              letterSpacing: '-0.01em',
-              display: 'inline-block',
-              paddingRight: '2rem',
-            }}
-          >
-            FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM •
-          </span>
-          <span
-            style={{
-              fontSize: 'clamp(24px, 3.5vw, 36px)',
-              fontWeight: 800,
-              color: '#1a1a1a',
-              letterSpacing: '-0.01em',
-              display: 'inline-block',
-              paddingRight: '2rem',
-            }}
-          >
-            FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM • FLYDEVS.COM •
-          </span>
+        <nav aria-label="Services">
+          <h2 className="text-sm font-medium text-white">Services</h2>
+          <ul className="mt-4 space-y-3">
+            {serviceLinks.map((s) => (
+              <li key={s}>
+                <Link href="/services" className="text-[15px] text-white/60 transition-colors duration-150 hover:text-white">
+                  {s}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h2 className="text-sm font-medium text-white">Get in touch</h2>
+          <ul className="mt-4 space-y-3 text-[15px] text-white/60">
+            <li>
+              <a href={`mailto:${site.email}`} className="break-all transition-colors duration-150 hover:text-white">
+                {site.email}
+              </a>
+            </li>
+            {site.phones.map((p) => (
+              <li key={p.href}>
+                <a href={p.href} className="tabular-nums transition-colors duration-150 hover:text-white">
+                  {p.display}
+                </a>
+              </li>
+            ))}
+            <li>Dubai, UAE · Kochi, India</li>
+          </ul>
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        
-        @media (max-width: 768px) {
-          footer > div:first-child {
-            grid-template-columns: 1fr 1fr !important;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          footer > div:first-child {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
-    </>
+      <div className="shell flex flex-col gap-2 border-t border-white/10 py-6 text-[13px] text-white/45 sm:flex-row sm:justify-between">
+        <span>© {year} Flydevs Global. All rights reserved.</span>
+        <span>Designed and built in Kochi and Dubai</span>
+      </div>
+
+      <div className="overflow-hidden bg-lime py-5 text-ink" aria-hidden>
+        <div className="marquee-track">
+          {[0, 1].map((k) => (
+            <span key={k} className="flex shrink-0 items-center whitespace-nowrap">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <span key={i} className="flex items-center text-[clamp(1.5rem,3.5vw,2.5rem)] font-medium tracking-[-0.03em]">
+                  <span className="px-6">Flydevs Global</span>
+                  <span className="h-2.5 w-2.5 rounded-full bg-ink" />
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+    </footer>
   )
 }
