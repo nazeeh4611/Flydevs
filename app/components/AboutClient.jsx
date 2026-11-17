@@ -53,7 +53,7 @@ export function AboutClient() {
         }
         intro="Building reliable, high-performance software for B2B and B2C brands — from a classroom startup to teams in Dubai and Kochi."
         aside={
-          <div className="relative mx-auto aspect-[3/2] w-full max-w-md overflow-hidden rounded-[20px] border border-ink/[0.08] bg-white">
+          <div className="relative aspect-[3/2] w-full max-w-md lg:ml-auto overflow-hidden rounded-[20px] border border-ink/[0.08] bg-white">
             <Image src="/fd.avif" alt="Flydevs Global logo mark" fill priority sizes="(min-width: 1024px) 30vw, 90vw" className="object-contain" />
           </div>
         }
@@ -65,7 +65,7 @@ export function AboutClient() {
       </PageHero>
 
       {/* Story */}
-      <section className="px-3 sm:px-4" aria-labelledby="story-title">
+      <section className="px-5 md:px-8" aria-labelledby="story-title">
         <div className="on-dark mx-auto max-w-[1400px] rounded-[28px] bg-ink py-16 text-white md:py-24">
           <div className="shell grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
@@ -140,7 +140,7 @@ export function AboutClient() {
             eyebrow="Our expertise"
             title={<span id="expertise-title">Complete VoIP solutions and software development</span>}
           />
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 md:gap-5">
+          <div className="mt-12 grid grid-cols-1 gap-4 [&>*]:min-w-0 sm:grid-cols-2 lg:grid-cols-4 md:gap-5">
             {expertise.map(({ Icon, title, desc }, i) => (
               <Reveal key={title} delay={(i % 4) * 50}>
                 <article className="group h-full rounded-[20px] border border-ink/[0.08] bg-card p-6 transition-[border-color,background-color] duration-200 hover:border-ink/20 hover:bg-white">
@@ -157,7 +157,7 @@ export function AboutClient() {
       </section>
 
       {/* Numbers */}
-      <section className="px-3 sm:px-4" aria-labelledby="numbers-title">
+      <section className="px-5 md:px-8" aria-labelledby="numbers-title">
         <div className="on-dark mx-auto max-w-[1400px] rounded-[28px] bg-ink py-16 text-white md:py-24">
           <div className="shell">
             <Eyebrow dark>Growth in numbers</Eyebrow>
@@ -185,7 +185,7 @@ export function AboutClient() {
             title={<span id="team-title">The people behind Nacrosoft &amp; Flydevs</span>}
             intro="The leaders driving the work across VoIP, software and design."
           />
-          <div className="mt-12 grid gap-4 md:grid-cols-2 md:gap-5">
+          <div className="mt-12 grid grid-cols-1 gap-4 [&>*]:min-w-0 md:grid-cols-2 md:gap-5">
             {team.map((m, i) => (
               <Reveal key={m.name} delay={i * 60}>
                 <article className="flex h-full flex-col gap-6 rounded-[20px] border border-ink/[0.08] bg-card p-2 sm:flex-row">

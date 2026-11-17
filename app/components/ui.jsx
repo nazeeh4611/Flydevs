@@ -198,7 +198,7 @@ export function StatRow({ stats, dark = false }) {
 /** Closing call-to-action band. */
 export function CtaBand({ title, text, href = '/contact', label = 'Start a project' }) {
   return (
-    <section className="px-3 pb-20 sm:px-4 md:pb-28">
+    <section className="px-5 pb-20 md:px-8 md:pb-28">
       <div className="mx-auto max-w-[1400px] rounded-[28px] bg-lime">
         <div className="shell flex flex-col gap-8 py-14 md:flex-row md:items-end md:justify-between md:py-20">
           <div className="max-w-2xl">

@@ -89,7 +89,7 @@ export default function ServicesSection() {
           </ButtonLink>
         </div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
+        <div className="mt-12 grid grid-cols-1 gap-4 [&>*]:min-w-0 sm:grid-cols-2 lg:grid-cols-3 md:gap-5">
           {services.map((s, i) => (
             <Reveal key={s.title} delay={(i % 3) * 60}>
               <ServiceCard service={s} index={i} />

@@ -21,9 +21,9 @@ function RotatingWord() {
   return (
     <span className="relative inline-block whitespace-nowrap align-bottom">
       <span className="sr-only">{WORDS.join(', ')}</span>
-      <span aria-hidden key={i} className="relative isolate inline-block px-[0.12em]">
+      <span aria-hidden key={i} className="relative isolate inline-block">
         <span className="word-roll inline-block">{WORDS[i]}</span>
-        <span className="marker-sweep absolute inset-x-0 inset-y-[0.06em] -z-10 rounded-[0.12em] bg-lime" />
+        <span className="marker-sweep absolute inset-x-[-0.1em] inset-y-[0.06em] -z-10 rounded-[0.12em] bg-lime" />
       </span>
     </span>
   )
@@ -145,7 +145,7 @@ export default function HeroSection() {
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.6fr)] lg:gap-8">
           <h1
             ref={headRef}
-            className="order-2 text-[clamp(2.75rem,6vw,7rem)] font-bold leading-[0.94] tracking-[-0.055em] text-ink lg:order-1"
+            className="order-2 text-[clamp(2.6rem,8.4vw,5.75rem)] lg:text-[clamp(3.5rem,6vw,7rem)] font-bold leading-[0.94] tracking-[-0.055em] text-ink lg:order-1"
           >
             <Line delay={80}>
               <span className="text-muted">
@@ -164,15 +164,18 @@ export default function HeroSection() {
           <div className="rise order-1 flex justify-start lg:order-2 lg:justify-end" style={{ animationDelay: '250ms' }}>
             <div
               ref={logoRef}
-              className="relative aspect-square w-[140px] transition-transform duration-500 ease-out sm:w-[200px] lg:w-full lg:max-w-[440px]"
+              className="relative aspect-[664/842] w-[96px] overflow-hidden transition-transform duration-500 ease-out sm:w-[120px] lg:w-full lg:max-w-[340px]"
             >
+              {/* The source file has empty space around the mark; offset it so the mark fills this box */}
               <Image
                 src="/fd.avif"
                 alt="Flydevs logo mark"
-                fill
+                width={1536}
+                height={1024}
                 priority
-                sizes="(min-width: 1024px) 440px, 200px"
-                className="scale-[1.45] object-contain [filter:brightness(0)]"
+                sizes="(min-width: 1024px) 800px, 280px"
+                className="absolute max-w-none [filter:brightness(0)]"
+                style={{ width: '231.3%', height: 'auto', left: '-60.2%', top: '-9.6%' }}
               />
             </div>
           </div>

@@ -71,7 +71,7 @@ export default function TestimonialsSection() {
           title={<span id="testimonials-title">What our clients say about working with us</span>}
         />
 
-        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
+        <div className="mt-12 grid grid-cols-1 gap-4 [&>*]:min-w-0 md:grid-cols-2 lg:grid-cols-3 md:gap-5">
           <Reveal className="md:col-span-2 lg:row-span-2 lg:col-span-1">
             <TestimonialCard t={first} featured />
           </Reveal>

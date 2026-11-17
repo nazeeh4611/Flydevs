@@ -82,7 +82,7 @@ export default function FeaturedWorkSection() {
           </ButtonLink>
         </div>
 
-        <div className="mt-12 grid gap-4 md:grid-cols-2 md:gap-5">
+        <div className="mt-12 grid grid-cols-1 gap-4 [&>*]:min-w-0 md:grid-cols-2 md:gap-5">
           {featuredProjects.map((project, i) => (
             <Reveal key={project.slug} delay={(i % 2) * 60}>
               <ProjectCard project={project} dark />

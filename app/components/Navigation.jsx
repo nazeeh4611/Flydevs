@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Menu, X, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { navLinks } from '../lib/site'
 
 export default function Navigation() {
@@ -46,13 +46,14 @@ export default function Navigation() {
         }`}
       >
         <nav className="shell flex h-[72px] items-center justify-between" aria-label="Main">
-          <Link href="/" onClick={close} className="-m-1 p-1" aria-label="Flydevs Global home">
+          <Link href="/" onClick={close} className="-m-1 min-w-0 shrink p-1" aria-label="Flydevs Global home">
             <Image
               src="/fdlogo-1.avif"
               alt="Flydevs Global"
               width={1390}
               height={396}
-              className="h-9 w-auto md:h-10"
+              sizes="140px"
+              className="block h-9 w-[126px] max-w-none md:h-10 md:w-[140px]"
               priority
             />
           </Link>
@@ -85,12 +86,30 @@ export default function Navigation() {
           <button
             type="button"
             onClick={() => setIsOpen((v) => !v)}
-            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full md:hidden"
+            className="relative ml-4 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink text-white md:hidden"
+            style={{ WebkitTapHighlightColor: 'transparent' }}
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
           >
-            {isOpen ? <X size={24} strokeWidth={1.75} /> : <Menu size={24} strokeWidth={1.75} />}
+            {/* Plain HTML bars: visible in every browser, morph into an X when open */}
+            <span aria-hidden className="relative block h-3.5 w-5">
+              <span
+                className={`absolute left-0 block h-[2px] w-5 rounded-full bg-white transition-transform duration-200 ease-out ${
+                  isOpen ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-0'
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-1/2 block h-[2px] w-5 -translate-y-1/2 rounded-full bg-white transition-opacity duration-150 ${
+                  isOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              <span
+                className={`absolute left-0 block h-[2px] w-5 rounded-full bg-white transition-transform duration-200 ease-out ${
+                  isOpen ? 'top-1/2 -translate-y-1/2 -rotate-45' : 'bottom-0'
+                }`}
+              />
+            </span>
           </button>
         </nav>
       </header>

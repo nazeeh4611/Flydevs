@@ -79,7 +79,7 @@ export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState(0)
 
   return (
-    <section className="px-3 sm:px-4" aria-labelledby="faq-title">
+    <section className="px-5 md:px-8" aria-labelledby="faq-title">
       <div className="on-dark mx-auto max-w-[1400px] rounded-[28px] bg-ink py-16 md:py-24">
         <div className="shell grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
           <div>

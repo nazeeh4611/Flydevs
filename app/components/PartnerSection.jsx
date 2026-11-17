@@ -62,7 +62,7 @@ function ServiceSlide({ slide, offset, step, onSelect, index, total }) {
         >
           <Icon size={26} strokeWidth={1.5} aria-hidden />
         </span>
-        <span className="font-mono text-xs tabular-nums opacity-55">
+        <span className={`font-mono text-xs tabular-nums transition-opacity duration-300 ${abs === 0 ? 'opacity-55' : 'opacity-0'}`}>
           {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
         </span>
       </span>
@@ -72,7 +72,11 @@ function ServiceSlide({ slide, offset, step, onSelect, index, total }) {
         <Icon size={220} strokeWidth={1} />
       </span>
 
-      <span className="mt-auto block text-[30px] font-bold leading-[1.02] tracking-[-0.04em]">{slide.title}</span>
+      {/* Text shows only on the centre card so side cards never overlap it */}
+      <span
+        className={`mt-auto block transition-opacity duration-300 ${abs === 0 ? 'opacity-100' : 'opacity-0'}`}
+      >
+      <span className="block text-[30px] font-bold leading-[1.02] tracking-[-0.04em]">{slide.title}</span>
       <span className="mt-3 block text-[15px] leading-6 opacity-75">{slide.subtitle}</span>
 
       <span className="mt-6 block space-y-2 border-t pt-5" style={{ borderColor: `${slide.fg}24` }}>
@@ -87,6 +91,7 @@ function ServiceSlide({ slide, offset, step, onSelect, index, total }) {
             {pt}
           </span>
         ))}
+      </span>
       </span>
     </button>
   )
@@ -104,7 +109,7 @@ export default function PartnerSection() {
 
   // Card spacing follows viewport width so side cards never cover the centre one
   useEffect(() => {
-    const update = () => setStep(Math.min(240, Math.max(150, window.innerWidth * 0.2)))
+    const update = () => setStep(Math.min(260, Math.max(170, window.innerWidth * 0.24)))
     update()
     window.addEventListener('resize', update)
     return () => window.removeEventListener('resize', update)

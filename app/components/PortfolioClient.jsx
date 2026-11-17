@@ -70,7 +70,7 @@ export default function PortfolioClient() {
             })}
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-4 [&>*]:min-w-0 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
             {list.map((project, i) => (
               <Reveal key={project.slug} delay={(i % 3) * 60}>
                 <ProjectCard project={project} priority={i < 2} />

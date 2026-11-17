@@ -272,7 +272,7 @@ export function ContactClient() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-4 md:gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <div className="mt-12 grid grid-cols-1 gap-4 [&>*]:min-w-0 md:gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
           <ContactForm />
           <ContactInfo />
         </div>

@@ -173,7 +173,7 @@ export default function ServicesClient() {
         </div>
       </section>
 
-      <section className="px-3 sm:px-4" aria-labelledby="partner-title">
+      <section className="px-5 md:px-8" aria-labelledby="partner-title">
         <div className="on-dark mx-auto max-w-[1400px] rounded-[28px] bg-ink py-16 text-white md:py-24">
           <div className="shell">
             <div className="grid gap-8 lg:grid-cols-2 lg:items-end">

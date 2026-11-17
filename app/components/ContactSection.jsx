@@ -9,7 +9,7 @@ export default function ContactSection() {
   ]
 
   return (
-    <section className="px-3 py-20 sm:px-4 md:py-28" aria-labelledby="contact-title">
+    <section className="px-5 py-20 md:px-8 md:py-28" aria-labelledby="contact-title">
       <div className="mx-auto max-w-[1400px] overflow-hidden rounded-[28px] bg-lime">
         <div className="shell grid gap-12 py-16 md:py-24 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-end">
           <div>
